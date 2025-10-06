@@ -1,0 +1,39 @@
+{
+  "name": "founderos",
+  "version": "1.0.0",
+  "description": "The final CLI for builders. Bootstrap your next company in one command.",
+  "scripts": {
+    "dev": "cd website && next dev --turbopack",
+    "build": "cd website && next build --turbopack",
+    "start": "cd website && next start",
+    "lint": "cd website && next lint"
+  },
+  "dependencies": {
+    "@clerk/nextjs": "^6.10.2",
+    "@stripe/stripe-js": "^5.8.0",
+    "lucide-react": "^0.469.0",
+    "next": "^15.5.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.4.0",
+    "stripe": "^17.6.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.6",
+    "@types/react-dom": "^19.0.2",
+    "tailwindcss": "^4.1.0",
+    "typescript": "5.9.3"
+  },
+  "keywords": [
+    "cli",
+    "founder",
+    "startup",
+    "builder",
+    "nextjs",
+    "saas"
+  ],
+  "author": "",
+  "license": "ISC"
+}
