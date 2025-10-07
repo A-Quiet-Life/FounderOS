@@ -1,0 +1,124 @@
+"use client";
+
+import { GripVertical } from "lucide-react";
+import type { Component, Tool } from "./types";
+
+interface ComponentNodeProps {
+  component: Component;
+  tool: Tool;
+  isSelected: boolean;
+  isDragging: boolean;
+  isConnectionSource: boolean;
+  onMouseDown: (e: React.MouseEvent) => void;
+  onMouseUp: (e: React.MouseEvent) => void;
+  onClick: (e: React.MouseEvent) => void;
+  onDragIconMouseDown: (e: React.MouseEvent) => void;
+  onDragIconMouseUp: (e: React.MouseEvent) => void;
+}
+
+export default function ComponentNode({
+  component,
+  tool,
+  isSelected,
+  isDragging,
+  isConnectionSource,
+  onMouseDown,
+  onMouseUp,
+  onClick,
+  onDragIconMouseDown,
+  onDragIconMouseUp,
+}: ComponentNodeProps) {
+  return (
+    <div
+      onClick={onClick}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+      className={`absolute border-2 rounded-lg px-4 py-3 transition-all bg-zinc-800 cursor-pointer ${
+        isSelected
+          ? "border-orange-500 shadow-lg shadow-orange-500/30"
+          : isConnectionSource
+          ? "border-blue-500 shadow-lg shadow-blue-500/30"
+          : isDragging
+          ? "border-yellow-500 shadow-lg shadow-yellow-500/30"
+          : "border-zinc-700"
+      } hover:bg-zinc-700`}
+      style={{
+        left: component.x,
+        top: component.y,
+        width: component.width,
+        height: component.height,
+        zIndex: isDragging ? 100 : 2,
+      }}
+    >
+      <div className="flex flex-col gap-1">
+        <div className="flex items-center gap-2">
+          {/* Drag handle - only in select mode */}
+          {tool === "select" && (
+            <div
+              onMouseDown={onDragIconMouseDown}
+              onMouseUp={onDragIconMouseUp}
+            >
+              <GripVertical
+                size={20}
+                className="text-zinc-500 flex-shrink-0 cursor-pointer"
+              />
+            </div>
+          )}
+          <div className="flex-1">
+            <div className="text-zinc-100 font-medium text-sm truncate">
+              {component.label}
+            </div>
+            {/* Type, Language, Framework info */}
+            <div className="flex items-center gap-1 mt-0.5 flex-wrap">
+              <span
+                className={`text-[10px] px-1.5 py-0.5 rounded ${
+                  component.type === "web"
+                    ? "bg-purple-600/50 text-purple-200"
+                    : component.type === "mobile"
+                    ? "bg-pink-600/50 text-pink-200"
+                    : component.type === "database"
+                    ? "bg-green-600/50 text-green-200"
+                    : "bg-blue-600/50 text-blue-200"
+                }`}
+              >
+                {component.type === "web"
+                  ? "Web"
+                  : component.type === "mobile"
+                  ? "Mobile"
+                  : component.type === "database"
+                  ? "Database"
+                  : "Service"}
+              </span>
+              {component.type === "service" && component.language && (
+                <span className="text-[10px] text-zinc-400">
+                  {component.language}
+                </span>
+              )}
+              {component.framework && (
+                <span className="text-[10px] text-zinc-400">
+                  • {component.framework}
+                </span>
+              )}
+            </div>
+
+            {/* Modules and API info */}
+            <div className="flex items-center gap-1 mt-1 flex-wrap">
+              {component.modules && component.modules.length > 0 && (
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-green-600/50 text-green-200">
+                  {component.modules.length} module
+                  {component.modules.length !== 1 ? "s" : ""}
+                </span>
+              )}
+              {component.apiEndpoints && component.apiEndpoints.length > 0 && (
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-orange-600/50 text-orange-200">
+                  {component.apiEndpoints.length} endpoint
+                  {component.apiEndpoints.length !== 1 ? "s" : ""}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

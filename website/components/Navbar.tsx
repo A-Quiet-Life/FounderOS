@@ -27,6 +27,12 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             <Link
+              href="/demo"
+              className="text-zinc-400 hover:text-zinc-100 transition-colors"
+            >
+              Demo
+            </Link>
+            <Link
               href={siteConfig.nav.pricing}
               className="text-zinc-400 hover:text-zinc-100 transition-colors"
             >
@@ -55,6 +61,13 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden border-t border-zinc-800/50 bg-zinc-900/95 backdrop-blur-lg">
           <div className="px-2 pt-2 pb-3 space-y-1">
+            <Link
+              href="/demo"
+              className="block px-3 py-2 rounded-md text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
+              onClick={() => setIsOpen(false)}
+            >
+              Demo
+            </Link>
             <Link
               href={siteConfig.nav.pricing}
               className="block px-3 py-2 rounded-md text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"

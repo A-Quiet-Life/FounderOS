@@ -18,25 +18,27 @@ export const siteConfig = {
   pricing: {
     plans: [
       {
-        name: "Supporter",
-        price: "$9",
+        name: "Starter",
+        price: "$19",
         priceId: "price_starter_monthly", // Replace with your Stripe Price ID
-        description: "Perfect for starting out",
+        description: "Perfect for prototyping",
         features: [
-          "Access to the FounderOS CLI",
-          "Basic templates and integrations",
+          "Access to FounderOS",
+          "Secures services with basic authentication",
+          "Create projects with all languages and frameworks",
           "Email support",
         ],
       },
       {
-        name: "Lifetime Access",
-        price: "$19",
+        name: "Pro",
+        price: "$29",
         priceId: "price_pro_monthly", // Replace with your Stripe Price ID
-        description: "For serious builders wanting to build quickly",
+        description: "For building production ready systems",
         features: [
           "Everything in Starter",
           "One click setup for Stripe, Clerk and Posthog integration",
-          "Create Flutter and React Native apps in one command",
+          "Create caches, queues, and event driven services",
+          "Secure connections with generated SDKs",
           "AI Integration for project fine tuning",
           "Priority support",
         ],
