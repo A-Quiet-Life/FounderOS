@@ -61,7 +61,7 @@ export const siteConfig = {
   landing: {
     hero: {
       subtitle:
-        "Bootstrap your next project in seconds. Combine any tech stack, be it backend, frontend, or mobile. Powered by open source.",
+        "Bootstrap your next project in seconds. Combine any tech stack, be it backend, frontend, or mobile.",
       cta: "Join Waitlist",
       secondaryCta: "See Plans",
       badge: "Powered by Open Source",
