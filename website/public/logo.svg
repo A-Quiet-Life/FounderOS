@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Background -->
+  <rect width="64" height="64" fill="#f97316"/>
+  <!-- Abstract symbol -->
+  <!-- Diagonal X -->
+  <path d="M14 18 L34 38 M34 18 L14 38" stroke="#09090b" stroke-width="10" stroke-linecap="square"/>
+  <!-- Bottom bar -->
+  <rect x="14" y="44" width="28" height="8" fill="#09090b"/>
+  <!-- Right vertical bar -->
+  <rect x="46" y="14" width="8" height="38" fill="#09090b"/>
+</svg>
