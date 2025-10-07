@@ -23,8 +23,38 @@ import {
   ClipboardList,
   Send,
   BarChart,
+  PiggyBank,
+  Wrench,
+  Brain,
+  Smartphone,
+  Binoculars,
+  Cable,
 } from "lucide-react";
 import { Waitlist } from "@clerk/nextjs";
+
+// Icon mapping function
+const getIcon = (iconName: string, size: number = 32) => {
+  const iconMap: Record<string, React.ComponentType<{ size: number }>> = {
+    Zap,
+    Shield,
+    BarChart,
+    Users,
+    Target,
+    Sparkles,
+    TrendingUp,
+    Heart,
+    PiggyBank,
+    Wrench,
+    Brain,
+    Smartphone,
+    ClipboardList,
+    Rocket,
+    Binoculars,
+  };
+
+  const IconComponent = iconMap[iconName];
+  return IconComponent ? <IconComponent size={size} /> : null;
+};
 
 export default function LandingPage() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
@@ -34,7 +64,7 @@ export default function LandingPage() {
       <Navbar />
 
       {/* Hero Section - Split Layout */}
-      <section className="py-12 lg:py-16 bg-gradient-to-br from-zinc-900 via-zinc-950 to-black relative overflow-hidden">
+      <section className="py-12 lg:py-16 bg-gradient-to-br from-zinc-800 via-zinc-950 to-black relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-red-900/20 via-transparent to-transparent"></div>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-orange-900/20 via-transparent to-transparent"></div>
@@ -44,14 +74,17 @@ export default function LandingPage() {
             {/* Left: Hero Text */}
             <div className="space-y-6 animate-slide-in-left">
               <div className="inline-flex items-center space-x-2 px-4 py-2 glass-effect rounded-full text-orange-400 text-sm font-medium shadow-lg border border-zinc-800">
-                <Sparkles size={16} />
+                <Cable size={16} />
                 <span>{siteConfig.landing.hero.badge}</span>
               </div>
 
               <h1 className="text-5xl sm:text-4xl lg:text-6xl font-bold text-zinc-100 leading-tight tracking-tight break-words">
                 {">"}create
                 {"-"}
-                <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+                <span
+                  className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent"
+                  style={{ fontFamily: siteConfig.fonts.cursive }}
+                >
                   any
                 </span>
                 {"-"}
@@ -125,19 +158,19 @@ export default function LandingPage() {
             <BenefitCard
               title={siteConfig.landing.benefits.items[0].title}
               description={siteConfig.landing.benefits.items[0].description}
-              icon={<Zap size={32} />}
+              icon={getIcon(siteConfig.landing.benefits.items[0].icon)}
               className="md:col-span-1"
             />
             <BenefitCard
               title={siteConfig.landing.benefits.items[1].title}
               description={siteConfig.landing.benefits.items[1].description}
-              icon={<Shield size={32} />}
+              icon={getIcon(siteConfig.landing.benefits.items[1].icon)}
               className="md:col-span-1"
             />
             <BenefitCard
               title={siteConfig.landing.benefits.items[2].title}
               description={siteConfig.landing.benefits.items[2].description}
-              icon={<BarChart size={32} />}
+              icon={getIcon(siteConfig.landing.benefits.items[2].icon)}
               className="md:col-span-1"
             />
 
@@ -145,13 +178,13 @@ export default function LandingPage() {
             <BenefitCard
               title={siteConfig.landing.benefits.items[3].title}
               description={siteConfig.landing.benefits.items[3].description}
-              icon={<Users size={32} />}
+              icon={getIcon(siteConfig.landing.benefits.items[3].icon)}
               className="lg:col-span-2 md:row-span-1"
             />
             <BenefitCard
               title={siteConfig.landing.benefits.items[4].title}
               description={siteConfig.landing.benefits.items[4].description}
-              icon={<Target size={32} />}
+              icon={getIcon(siteConfig.landing.benefits.items[4].icon)}
               className="lg:col-span-1"
             />
 
@@ -159,19 +192,19 @@ export default function LandingPage() {
             <BenefitCard
               title={siteConfig.landing.benefits.items[5].title}
               description={siteConfig.landing.benefits.items[5].description}
-              icon={<Sparkles size={32} />}
+              icon={getIcon(siteConfig.landing.benefits.items[5].icon)}
               className="md:col-span-1"
             />
             <BenefitCard
               title={siteConfig.landing.benefits.items[6].title}
               description={siteConfig.landing.benefits.items[6].description}
-              icon={<TrendingUp size={32} />}
+              icon={getIcon(siteConfig.landing.benefits.items[6].icon)}
               className="md:col-span-1"
             />
             <BenefitCard
               title={siteConfig.landing.benefits.items[7].title}
               description={siteConfig.landing.benefits.items[7].description}
-              icon={<Heart size={32} />}
+              icon={getIcon(siteConfig.landing.benefits.items[7].icon)}
               className="md:col-span-1"
             />
           </div>
@@ -195,19 +228,19 @@ export default function LandingPage() {
               step={1}
               title={siteConfig.landing.howItWorks.steps[0].title}
               description={siteConfig.landing.howItWorks.steps[0].description}
-              icon={<ClipboardList size={40} />}
+              icon={getIcon(siteConfig.landing.howItWorks.steps[0].icon, 40)}
             />
             <HowItWorksCard
               step={2}
               title={siteConfig.landing.howItWorks.steps[1].title}
               description={siteConfig.landing.howItWorks.steps[1].description}
-              icon={<Rocket size={40} />}
+              icon={getIcon(siteConfig.landing.howItWorks.steps[1].icon, 40)}
             />
             <HowItWorksCard
               step={3}
               title={siteConfig.landing.howItWorks.steps[2].title}
               description={siteConfig.landing.howItWorks.steps[2].description}
-              icon={<BarChart size={40} />}
+              icon={getIcon(siteConfig.landing.howItWorks.steps[2].icon, 40)}
             />
           </div>
         </div>
@@ -225,7 +258,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="animate-scale-in delay-200">
+          <div className="animate-scale-in delay-200 flex justify-center">
             <PricingCards showCheckout={false} />
           </div>
 
@@ -315,7 +348,7 @@ export default function LandingPage() {
                     gap: "0.5rem",
                   },
                   formButtonPrimary: {
-                    background: "linear-gradient(to right, #ef4444, #f97316)",
+                    background: "linear-gradient(to right, #dc2626, #ea580c)",
                     fontSize: "1rem",
                     fontWeight: "600",
                     padding: "1rem 1.5rem",
@@ -323,13 +356,13 @@ export default function LandingPage() {
                     marginTop: "1.5rem",
                     borderRadius: "0.75rem",
                     boxShadow:
-                      "0 4px 6px -1px rgba(239, 68, 68, 0.3), 0 2px 4px -1px rgba(249, 115, 22, 0.2)",
+                      "0 4px 6px -1px rgba(220, 38, 38, 0.4), 0 2px 4px -1px rgba(234, 88, 12, 0.3)",
                     transition: "all 0.2s ease",
                     "&:hover": {
-                      background: "linear-gradient(to right, #dc2626, #ea580c)",
+                      background: "linear-gradient(to right, #b91c1c, #c2410c)",
                       transform: "translateY(-1px)",
                       boxShadow:
-                        "0 6px 10px -1px rgba(239, 68, 68, 0.4), 0 4px 6px -1px rgba(249, 115, 22, 0.3)",
+                        "0 6px 10px -1px rgba(185, 28, 28, 0.5), 0 4px 6px -1px rgba(194, 65, 12, 0.4)",
                     },
                     "&:active": {
                       transform: "translateY(0)",

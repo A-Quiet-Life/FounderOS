@@ -42,14 +42,17 @@ export default function PricingCards({
     }
   };
 
+  const gridCols =
+    siteConfig.pricing.plans.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3";
+
   return (
-    <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+    <div className={`grid ${gridCols} gap-8 max-w-6xl mx-auto`}>
       {siteConfig.pricing.plans.map((plan, index) => (
         <div
           key={index}
-          className={`relative bg-zinc-900 rounded-2xl shadow-xl overflow-hidden ${
+          className={`relative bg-zinc-900 rounded-2xl shadow-xl overflow-hidden max-w-md ${
             plan.popular
-              ? "border-4 border-orange-500 transform scale-105"
+              ? "border-4 border-orange-500"
               : "border-2 border-zinc-800"
           }`}
         >
@@ -74,7 +77,7 @@ export default function PricingCards({
                 <span className="text-5xl font-bold text-zinc-100">
                   {plan.price}
                 </span>
-                <span className="text-zinc-400 ml-2">/month</span>
+                <span className="text-zinc-400 ml-2"></span>
               </div>
             </div>
 

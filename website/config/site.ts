@@ -3,6 +3,11 @@ export const siteConfig = {
   description:
     "The final CLI for builders. Bootstrap your next company in one command.",
 
+  // Fonts
+  fonts: {
+    cursive: "var(--font-kalam)",
+  },
+
   // Navigation
   nav: {
     landing: "/",
@@ -13,39 +18,42 @@ export const siteConfig = {
   pricing: {
     plans: [
       {
-        name: "Starter",
+        name: "Supporter",
         price: "$9",
         priceId: "price_starter_monthly", // Replace with your Stripe Price ID
-        description: "Perfect for trying out",
-        features: ["Feature 1", "Feature 2", "Feature 3", "Email support"],
+        description: "Perfect for starting out",
+        features: [
+          "Access to the FounderOS CLI",
+          "Basic templates and integrations",
+          "Email support",
+        ],
       },
       {
-        name: "Pro",
-        price: "$29",
+        name: "Lifetime Access",
+        price: "$19",
         priceId: "price_pro_monthly", // Replace with your Stripe Price ID
-        description: "For serious users",
+        description: "For serious builders wanting to build quickly",
         features: [
           "Everything in Starter",
-          "Advanced Feature 1",
-          "Advanced Feature 2",
-          "Advanced Feature 3",
+          "One click setup for Stripe, Clerk and Posthog integration",
+          "Create Flutter and React Native apps in one command",
+          "AI Integration for project fine tuning",
           "Priority support",
         ],
         popular: true,
       },
-      {
-        name: "Enterprise",
-        price: "$99",
-        priceId: "price_enterprise_monthly", // Replace with your Stripe Price ID
-        description: "For large teams",
-        features: [
-          "Everything in Pro",
-          "Enterprise Feature 1",
-          "Enterprise Feature 2",
-          "Dedicated support",
-          "Custom integration",
-        ],
-      },
+      // {
+      //   name: "Enterprise",
+      //   price: "$99",
+      //   priceId: "price_enterprise_monthly", // Replace with your Stripe Price ID
+      //   description: "For startups and larger teams",
+      //   features: [
+      //     "Everything in Pro",
+      //     "Scale ready templates",
+      //     "Dedicated support",
+      //     "Custom integrations",
+      //   ],
+      // },
     ],
   },
 
@@ -53,10 +61,10 @@ export const siteConfig = {
   landing: {
     hero: {
       subtitle:
-        "Build, test, and validate your product with real users before investing months of development.",
+        "Bootstrap your next project in seconds. Combine any tech stack, be it backend, frontend, or mobile. Powered by open source.",
       cta: "Join Waitlist",
       secondaryCta: "See Plans",
-      badge: "Launching Soon",
+      badge: "Powered by Open Source",
       socialProof: {
         productsValidated: "300+",
         productsValidatedLabel: "Tech stack combinations",
@@ -64,96 +72,85 @@ export const siteConfig = {
         successRateLabel: "Improved time to first deploy",
       },
     },
-    features: [
-      {
-        title: "Fast Setup",
-        description: "Get your validation page live in minutes, not days.",
-        icon: "⚡",
-      },
-      {
-        title: "Payment Ready",
-        description:
-          "Integrated Stripe checkout to validate willingness to pay.",
-        icon: "💳",
-      },
-      {
-        title: "Waitlist Built-in",
-        description:
-          "Capture interest with a beautiful waitlist powered by Clerk.",
-        icon: "📝",
-      },
-      {
-        title: "Mobile Optimized",
-        description: "Looks great on all devices with responsive design.",
-        icon: "📱",
-      },
-    ],
     benefits: {
-      title: "Everything You Need",
-      subtitle: "Built-in tools and features to validate your product idea",
+      title: "The CLI you've been waiting for",
+      subtitle:
+        "FounderOS allows you to bypass all the pain bootstrapping from scratch.",
       items: [
         {
           title: "Lightning Fast",
-          description:
-            "Deploy in minutes, not days. Get your validation page live instantly.",
+          description: "Each project is bootstrapped in seconds, not hours.",
+          icon: "Zap",
         },
         {
           title: "Payment Ready",
           description:
-            "Stripe integration out of the box. Test willingness to pay.",
+            "Stripe integration out of the box. Prebuilt rails for recurring revenue.",
+          icon: "PiggyBank",
         },
         {
-          title: "Built-in Analytics",
-          description: "Track every interaction and conversion automatically.",
-        },
-        {
-          title: "Waitlist Management",
+          title: "AI Ready",
           description:
-            "Capture early interest with Clerk's powerful waitlist component. Build your launch list.",
+            "All projects come with build-in cursorrules for day-1 agentic coding.",
+          icon: "Brain",
         },
         {
-          title: "Mobile Optimized",
-          description: "Perfect on any device with responsive design.",
-        },
-        {
-          title: "Easy Customization",
+          title: "Build your way",
           description:
-            "Single config file controls all content. No hunting through code.",
+            "Choose from multiple backend languages, frameworks, and features. Everything comes pre-configured and ready to run.",
+          icon: "Wrench",
         },
         {
-          title: "Growth Focused",
-          description: "Optimize for conversions with built-in best practices.",
+          title: "Mobile First",
+          description: "Build mobile first, and ",
+          icon: "Smartphone",
         },
         {
-          title: "Support Included",
-          description: "Documentation and examples to get you started fast.",
+          title: "No Hidden Magic",
+          description:
+            "All code is ready for you to understand and modify. Nothing is hidden.",
+          icon: "Sparkles",
+        },
+        {
+          title: "Prebuilt Authentication",
+          description:
+            "All projects come with prebuilt authentication using industry standards.",
+          icon: "Shield",
+        },
+        {
+          title: "Built for Modern Growth",
+          description: "Frontends ship with implemented SEO and analytics.",
+          icon: "TrendingUp",
         },
       ],
     },
     howItWorks: {
       title: "How It Works",
-      subtitle: "Three simple steps to validate your product idea",
+      subtitle: "Choose your stack, and start building.",
       steps: [
         {
-          title: "Customize Your Page",
+          title: "Choose your stack",
           description:
-            "Update the config file with your product details, pricing, and features. No complex setup required.",
+            "View our free extensive list of tech stacks, and choose the one that best fits your project.",
+          icon: "Binoculars",
+        },
+        {
+          title: "Run <founder found>",
+          description:
+            "Run our CLI to bootstrap your project. The CLI will guide you through the process, making stack selection a breeze.",
+          icon: "BarChart",
         },
         {
           title: "Launch & Share",
           description:
             "Deploy to Vercel or any host in minutes. Share your validation page with potential users.",
-        },
-        {
-          title: "Collect Data",
-          description:
-            "Track signups, measure interest, and test pricing. Make informed decisions before building.",
+          icon: "Rocket",
         },
       ],
     },
     pricing: {
       title: "Simple, Transparent Pricing",
-      subtitle: "Choose the plan that's right for you. Start validating today.",
+      subtitle: "Choose the plan that's right for you. Start building today.",
       viewDetailsText: "View full pricing details →",
     },
     faq: {
@@ -163,22 +160,23 @@ export const siteConfig = {
         {
           question: "How does this work?",
           answer:
-            "Simply customize the template with your product idea, deploy it, and share with potential users to validate demand.",
+            "FounderOS is a CLI that allows you to bootstrap your project in seconds. It's a tool that helps you to build your project faster and easier.",
         },
         {
-          question: "Do I need coding experience?",
+          question: "How does FounderOS work?",
           answer:
-            "Basic knowledge of React and Next.js is helpful, but the template is designed to be easy to customize.",
+            "When you create a new project, you'll be guided through a series of prompts to select your stack and features. Once you've selected your stack and features, the CLI will generate a project for you by combining a number of templates and integrations.",
         },
         {
-          question: "Can I customize the design?",
+          question: "Can I customize the project?",
           answer:
-            "Yes! The template uses Tailwind CSS, making it easy to adjust colors, spacing, and layout to match your brand.",
+            "Yes! The project is fully customizable. You can modify the code to your liking.",
         },
         {
-          question: "What payment methods are supported?",
+          question:
+            "Can I create projects using the template in the FounderOS repository?",
           answer:
-            "We integrate with Stripe, which supports all major credit cards, Apple Pay, Google Pay, and more.",
+            "Yes! You can create projects using the template in the FounderOS repository. This is an entirely open source project.",
         },
       ],
     },

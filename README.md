@@ -1,4 +1,4 @@
-# FounderOS 🚀
+# FounderOS
 
 **The final CLI for builders. Bootstrap your next company in one command.**
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Kalam } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { siteConfig } from "@/config/site";
@@ -7,6 +7,11 @@ import { siteConfig } from "@/config/site";
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const kalam = Kalam({
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -31,7 +36,14 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={ibmPlexMono.className}>{children}</body>
+        <body
+          className={ibmPlexMono.className}
+          style={
+            { "--font-kalam": kalam.style.fontFamily } as React.CSSProperties
+          }
+        >
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );

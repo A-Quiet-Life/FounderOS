@@ -197,9 +197,7 @@ export default function Terminal() {
         type: "output",
         content: "  From idea to reality in seconds. Now go build something",
       },
-      { type: "output", content: "  amazing." },
-      { type: "output", content: "" },
-      { type: "output", content: "  ✨ Happy building! 🎉" },
+      { type: "output", content: "  amazing. 🎉" },
       { type: "output", content: "" },
     ]);
     setTerminalState("idle");

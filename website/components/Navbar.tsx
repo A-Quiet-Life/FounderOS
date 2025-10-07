@@ -5,6 +5,7 @@ import { useState } from "react";
 import { siteConfig } from "@/config/site";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import GitHubLink from "./GitHubLink";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +18,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center">
             <span className="flex text-xl justify-center font-bold text-zinc-100">
               <span className="mr-2">
-                <Image src="/logo.png" alt="FounderOS" width={24} height={24} />
+                <Image src="/logo.svg" alt="FounderOS" width={24} height={24} />
               </span>
               {siteConfig.name}
             </span>
@@ -31,6 +32,7 @@ export default function Navbar() {
             >
               Pricing
             </Link>
+            <GitHubLink />
             <a
               href="/#waitlist"
               className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-lg hover:from-red-600 hover:to-orange-600 transition-colors font-medium"
@@ -60,6 +62,7 @@ export default function Navbar() {
             >
               Pricing
             </Link>
+            <GitHubLink className="px-3 py-2 rounded-md hover:bg-zinc-800" />
             <a
               href="/#waitlist"
               className="block px-3 py-2 rounded-md text-white bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600"
