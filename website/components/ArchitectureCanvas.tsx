@@ -105,18 +105,29 @@ export default function ArchitectureCanvas({
   } | null>(null);
 
   const handleCanvasMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (tool !== "component" || !canvasRef.current) return;
+    if (!canvasRef.current) return;
 
-    const rect = canvasRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    // Left-click to pan when in select mode and not creating a component
+    if (e.button === 0 && tool === "select") {
+      e.preventDefault();
+      setIsPanning(true);
+      setPanStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
+      return;
+    }
 
-    setCreatingComponent({
-      startX: x,
-      startY: y,
-      currentX: x,
-      currentY: y,
-    });
+    // Create component mode
+    if (tool === "component") {
+      const rect = canvasRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      setCreatingComponent({
+        startX: x,
+        startY: y,
+        currentX: x,
+        currentY: y,
+      });
+    }
   };
 
   const handleCanvasClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -257,16 +268,13 @@ export default function ArchitectureCanvas({
       return;
     }
 
-    if (tool === "select" && !wasDragging && !wasResizing) {
+    if (tool === "select" && !wasDragging && !wasResizing && !dragIntent) {
       onSelectedComponentChange(componentId);
-      const component = components.find((c) => c.id === componentId);
-      if (component) {
-        setRenamePopup({
-          componentId,
-          x: component.x + component.width,
-          y: component.y,
-        });
-      }
+      setRenamePopup({
+        componentId,
+        x: 0, // Will be positioned top-right via CSS
+        y: 0,
+      });
     }
   };
 
@@ -285,56 +293,30 @@ export default function ArchitectureCanvas({
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    setDragIntent({
-      componentId,
-      startTime: Date.now(),
-      startX: mouseX,
-      startY: mouseY,
-      enabled: false,
+    // Start dragging immediately when clicking anywhere on component
+    setDragging({
+      id: componentId,
+      offsetX: mouseX - component.x,
+      offsetY: mouseY - component.y,
     });
-
-    dragTimerRef.current = setTimeout(() => {
-      setDragIntent((prev: typeof dragIntent) => {
-        if (prev && prev.componentId === componentId) {
-          setDragging({
-            id: componentId,
-            offsetX: prev.startX - component.x,
-            offsetY: prev.startY - component.y,
-          });
-          return { ...prev, enabled: true };
-        }
-        return prev;
-      });
-    }, 50);
   };
 
   const handleDragIconMouseUp = (e: React.MouseEvent, componentId: string) => {
     e.stopPropagation();
 
-    if (dragTimerRef.current) {
-      clearTimeout(dragTimerRef.current);
-      dragTimerRef.current = null;
+    const wasDragging = dragging !== null;
+
+    if (!wasDragging) {
+      // If not dragging, show menu
+      onSelectedComponentChange(componentId);
+      setRenamePopup({
+        componentId,
+        x: 0, // Will be positioned top-right via CSS
+        y: 0,
+      });
     }
 
-    if (dragIntent?.enabled) {
-      setDragging(null);
-      setDragIntent(null);
-      return;
-    }
-
-    if (dragIntent && !dragIntent.enabled) {
-      const component = components.find((c) => c.id === componentId);
-      if (component) {
-        onSelectedComponentChange(componentId);
-        setRenamePopup({
-          componentId,
-          x: component.x + component.width,
-          y: component.y,
-        });
-      }
-    }
-
-    setDragIntent(null);
+    setDragging(null);
   };
 
   const handleResizeStart = (
@@ -372,38 +354,19 @@ export default function ArchitectureCanvas({
   };
 
   const handleDefineApi = (componentId: string) => {
-    if (renamePopup) {
-      const canvasHeight = 600;
-      const menuHeight = 600;
-      const centeredY = (canvasHeight - menuHeight) / 2;
-
-      // Position API menu to the right of component menu
-      // Component menu is at renamePopup.x + 20, width 320px
-      // API menu starts at: (renamePopup.x + 20) + 320px + 20px gap = renamePopup.x + 360
-      setApiDefinitionMenu({
-        componentId,
-        x: renamePopup.x + 360, // Component menu (320px) + 20px offset + 20px gap
-        y: centeredY,
-      });
-    }
+    setApiDefinitionMenu({
+      componentId,
+      x: 0, // Will be positioned via CSS at top-right
+      y: 0,
+    });
   };
 
   const handleAddModules = (componentId: string) => {
-    if (renamePopup) {
-      const canvasHeight = 600;
-      const menuHeight = 600;
-      const centeredY = (canvasHeight - menuHeight) / 2;
-
-      // Position modules menu to the left of component menu
-      // Component menu is at renamePopup.x + 20
-      // Modules menu ends at: (renamePopup.x + 20) - 20px gap = renamePopup.x
-      // Modules menu width is 350px, so starts at: renamePopup.x - 350
-      setModulesMenu({
-        componentId,
-        x: renamePopup.x - 350, // 350px width, ends 20px before component menu
-        y: centeredY,
-      });
-    }
+    setModulesMenu({
+      componentId,
+      x: 0, // Will be positioned via CSS at top-right
+      y: 0,
+    });
   };
 
   const handleConnectionUpdateInternal = (
@@ -433,15 +396,6 @@ export default function ArchitectureCanvas({
     }
   };
 
-  const handlePanStart = (e: React.MouseEvent) => {
-    // Start panning with space + click or middle mouse button
-    if (e.button === 1 || (e.button === 0 && tool === "select" && e.shiftKey)) {
-      e.preventDefault();
-      setIsPanning(true);
-      setPanStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
-    }
-  };
-
   const handlePanMove = (e: MouseEvent) => {
     if (isPanning) {
       setPan({
@@ -465,18 +419,16 @@ export default function ArchitectureCanvas({
         window.removeEventListener("mouseup", handlePanEnd);
       };
     }
-  }, [isPanning, panStart, pan]);
+  }, [isPanning, panStart]);
 
   return (
     <div
       ref={canvasRef}
       onClick={handleCanvasClick}
-      onMouseDown={(e) => {
-        handlePanStart(e);
-        if (!isPanning) handleCanvasMouseDown(e);
-      }}
+      onMouseDown={handleCanvasMouseDown}
       onWheel={handleWheel}
-      className="relative w-full h-[600px] bg-zinc-900 border-2 border-zinc-800 rounded-xl overflow-hidden"
+      onContextMenu={(e) => e.preventDefault()}
+      className="relative w-full h-full bg-zinc-900 overflow-hidden animate-fade-in"
       style={{
         overscrollBehavior: "none",
         touchAction: "none",
@@ -488,11 +440,14 @@ export default function ArchitectureCanvas({
           ? "grabbing"
           : tool === "component" || dragConnection
           ? "crosshair"
+          : tool === "select"
+          ? "grab"
           : "default",
+        userSelect: tool === "connection" ? "none" : "auto",
       }}
     >
       {/* Zoom indicator */}
-      <div className="absolute top-4 left-4 bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-1 text-xs text-zinc-400 z-50 pointer-events-none">
+      <div className="absolute bottom-4 right-4 bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-1 text-xs text-zinc-400 z-50 pointer-events-none animate-fade-in delay-300">
         {Math.round(zoom * 100)}%
       </div>
 
@@ -501,8 +456,8 @@ export default function ArchitectureCanvas({
         style={{
           transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
           transformOrigin: "0 0",
-          width: "100%",
-          height: "100%",
+          width: "5000px",
+          height: "5000px",
           position: "absolute",
           top: 0,
           left: 0,
@@ -576,98 +531,103 @@ export default function ArchitectureCanvas({
       </div>
       {/* End Transform wrapper */}
 
-      {/* Component Menu */}
+      {/* Component Menu - Fixed at top right */}
       {renamePopup &&
         (() => {
           const component = components.find(
             (c) => c.id === renamePopup.componentId
           );
-          const canvasHeight = 600;
-          const menuHeight = 600;
-          const centeredY = (canvasHeight - menuHeight) / 2;
           return (
-            <ComponentMenu
-              componentId={renamePopup.componentId}
-              x={renamePopup.x + 20}
-              y={centeredY}
-              component={component}
-              onClose={() => {
-                setRenamePopup(null);
-                setApiDefinitionMenu(null);
-                setModulesMenu(null);
-              }}
-              onUpdate={onComponentUpdate}
-              onDelete={onComponentDelete}
-              onDefineApi={handleDefineApi}
-              onAddModules={handleAddModules}
-              menuType="component"
-            />
+            <div className="fixed top-4 right-4 z-[60]">
+              <ComponentMenu
+                componentId={renamePopup.componentId}
+                x={0}
+                y={0}
+                component={component}
+                onClose={() => {
+                  setRenamePopup(null);
+                  setApiDefinitionMenu(null);
+                  setModulesMenu(null);
+                }}
+                onUpdate={onComponentUpdate}
+                onDelete={onComponentDelete}
+                onDefineApi={handleDefineApi}
+                onAddModules={handleAddModules}
+                menuType="component"
+              />
+            </div>
           );
         })()}
 
-      {/* Connection Menu */}
+      {/* Connection Menu - Fixed at top right */}
       {connectionMenu &&
         (() => {
           const connection = connections.find(
             (c) => c.id === connectionMenu.connectionId
           );
           return (
-            <ComponentMenu
-              componentId={connectionMenu.connectionId}
-              x={connectionMenu.x}
-              y={connectionMenu.y}
-              connection={connection}
-              onClose={() => setConnectionMenu(null)}
-              onDelete={onConnectionDelete}
-              onConnectionUpdate={handleConnectionUpdateInternal}
-              showDelete={true}
-              menuType="connection"
-            />
+            <div className="fixed top-4 right-4 z-[60]">
+              <ComponentMenu
+                componentId={connectionMenu.connectionId}
+                x={0}
+                y={0}
+                connection={connection}
+                onClose={() => setConnectionMenu(null)}
+                onDelete={onConnectionDelete}
+                onConnectionUpdate={handleConnectionUpdateInternal}
+                showDelete={true}
+                menuType="connection"
+              />
+            </div>
           );
         })()}
 
-      {/* API Definition Menu */}
+      {/* API Definition Menu - Fixed at top right, below main menu */}
       {apiDefinitionMenu &&
         (() => {
           const component = components.find(
             (c) => c.id === apiDefinitionMenu.componentId
           );
           return (
-            <ApiDefinitionMenu
-              componentId={apiDefinitionMenu.componentId}
-              existingEndpoints={component?.apiEndpoints}
-              x={apiDefinitionMenu.x}
-              y={apiDefinitionMenu.y}
-              onClose={() => setApiDefinitionMenu(null)}
-              onSave={(componentId, endpoints) => {
-                // Update component with API endpoints
-                onComponentUpdate(componentId, { apiEndpoints: endpoints });
-                setApiDefinitionMenu(null);
-              }}
-            />
+            <div className="fixed top-[620px] right-4 z-[60]">
+              <ApiDefinitionMenu
+                componentId={apiDefinitionMenu.componentId}
+                existingEndpoints={component?.apiEndpoints}
+                x={0}
+                y={0}
+                onClose={() => setApiDefinitionMenu(null)}
+                onSave={(componentId, endpoints) => {
+                  // Update component with API endpoints
+                  onComponentUpdate(componentId, { apiEndpoints: endpoints });
+                  setApiDefinitionMenu(null);
+                }}
+              />
+            </div>
           );
         })()}
 
-      {/* Modules Menu */}
+      {/* Modules Menu - Fixed at top right, next to main menu */}
       {modulesMenu &&
         (() => {
           const component = components.find(
             (c) => c.id === modulesMenu.componentId
           );
           return (
-            <ModulesMenu
-              componentId={modulesMenu.componentId}
-              componentType={component?.type || "service"}
-              existingModules={component?.modules}
-              x={modulesMenu.x}
-              y={modulesMenu.y}
-              onClose={() => setModulesMenu(null)}
-              onSave={(componentId, modules) => {
-                // Update component with selected modules
-                onComponentUpdate(componentId, { modules });
-                setModulesMenu(null);
-              }}
-            />
+            <div className="fixed top-4 right-[360px] z-[60]">
+              <ModulesMenu
+                componentId={modulesMenu.componentId}
+                componentType={component?.type || "service"}
+                existingModules={component?.modules}
+                x={0}
+                y={0}
+                onClose={() => setModulesMenu(null)}
+                onSave={(componentId, modules) => {
+                  // Update component with selected modules
+                  onComponentUpdate(componentId, { modules });
+                  setModulesMenu(null);
+                }}
+              />
+            </div>
           );
         })()}
     </div>

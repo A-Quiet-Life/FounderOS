@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "FounderOS",
   description:
-    "The final CLI for builders. Bootstrap your next company in one command.",
+    "FounderOS is the visual IDE for builders. Implement your idea in seconds, without configuration headaches.",
 
   // Fonts
   fonts: {
@@ -23,7 +23,7 @@ export const siteConfig = {
         priceId: "price_starter_monthly", // Replace with your Stripe Price ID
         description: "Perfect for prototyping",
         features: [
-          "Access to FounderOS",
+          "Access to the FounderOS CLI and Web Builder",
           "Secures services with basic authentication",
           "Create projects with all languages and frameworks",
           "Email support",
@@ -36,26 +36,26 @@ export const siteConfig = {
         description: "For building production ready systems",
         features: [
           "Everything in Starter",
-          "One click setup for Stripe, Clerk and Posthog integration",
+          "One click setup for payment, authentication, and analytics integration",
           "Create caches, queues, and event driven services",
-          "Secure connections with generated SDKs",
+          "Generated versioned SDKs for type-safe service communication",
           "AI Integration for project fine tuning",
           "Priority support",
         ],
         popular: true,
       },
-      // {
-      //   name: "Enterprise",
-      //   price: "$99",
-      //   priceId: "price_enterprise_monthly", // Replace with your Stripe Price ID
-      //   description: "For startups and larger teams",
-      //   features: [
-      //     "Everything in Pro",
-      //     "Scale ready templates",
-      //     "Dedicated support",
-      //     "Custom integrations",
-      //   ],
-      // },
+      {
+        name: "Enterprise",
+        price: "$99",
+        priceId: "price_enterprise_monthly", // Replace with your Stripe Price ID
+        description: "For startups and larger teams",
+        features: [
+          "Everything in Pro",
+          "Unlimited seats per project",
+          "Dedicated support",
+          "Custom integrations",
+        ],
+      },
     ],
   },
 
@@ -63,7 +63,7 @@ export const siteConfig = {
   landing: {
     hero: {
       subtitle:
-        "Bootstrap your next project in seconds. Combine any tech stack, be it backend, frontend, or mobile.",
+        "Skip the setup and start building. Create app components visually, and export to production-ready code.",
       cta: "Join Waitlist",
       secondaryCta: "See Plans",
       badge: "Powered by Open Source",
@@ -75,53 +75,56 @@ export const siteConfig = {
       },
     },
     benefits: {
-      title: "The CLI you've been waiting for",
+      title: "Next Generation Bootstrapping",
       subtitle:
-        "FounderOS allows you to bypass all the pain bootstrapping from scratch.",
+        "FounderOS allows you to configure the your apps core services, and then generates needed integrations, modules, and configuration.",
       items: [
         {
           title: "Lightning Fast",
-          description: "Each project is bootstrapped in seconds, not hours.",
+          description:
+            "Spin up a complete, type-safe stack in seconds. No config, no setup — just design and export.",
           icon: "Zap",
         },
         {
           title: "Payment Ready",
           description:
-            "Stripe integration out of the box. Prebuilt rails for recurring revenue.",
+            "Built-in Stripe modules with recurring billing and webhook handling already wired up.",
           icon: "PiggyBank",
         },
         {
           title: "AI Ready",
           description:
-            "All projects come with build-in cursorrules for day-1 agentic coding.",
+            "Pre-typed APIs and clean data flows make adding LLMs or agents effortless.",
           icon: "Brain",
         },
         {
-          title: "Build your way",
+          title: "Build Your Way",
           description:
-            "Choose from multiple backend languages, frameworks, and features. Everything comes pre-configured and ready to run.",
+            "Pick from ready modules for analytics, auth, queues, and caches — all pre-configured.",
           icon: "Wrench",
         },
         {
           title: "Mobile First",
-          description: "Build mobile first, and ",
+          description:
+            "Generate responsive, accessible React or Next.js frontends instantly.",
           icon: "Smartphone",
         },
         {
           title: "No Hidden Magic",
           description:
-            "All code is ready for you to understand and modify. Nothing is hidden.",
+            "Clean, typed, and editable TypeScript. Everything visible, nothing hidden.",
           icon: "Sparkles",
         },
         {
           title: "Prebuilt Authentication",
           description:
-            "All projects come with prebuilt authentication using industry standards.",
+            "Secure your stack instantly with Clerk or Auth.js integration out of the box.",
           icon: "Shield",
         },
         {
-          title: "Built for Modern Growth",
-          description: "Frontends ship with implemented SEO and analytics.",
+          title: "Built for Growth",
+          description:
+            "Add new services or modules anytime. FounderOS keeps everything in sync.",
           icon: "TrendingUp",
         },
       ],
@@ -131,21 +134,21 @@ export const siteConfig = {
       subtitle: "Choose your stack, and start building.",
       steps: [
         {
-          title: "Choose your stack",
+          title: "Plan Your Architecture",
           description:
-            "View our free extensive list of tech stacks, and choose the one that best fits your project.",
+            "Visually lay out your system — add APIs, databases, caches, workers, and integrations. FounderOS creates clean YAML specs for every module and connection.",
           icon: "Binoculars",
         },
         {
-          title: "Run <founder found>",
+          title: "Sync and Build",
           description:
-            "Run our CLI to bootstrap your project. The CLI will guide you through the process, making stack selection a breeze.",
+            "Click Sync to generate Fastify routes, Zod schemas, typed SDKs, queues, and Next.js wiring — all in TypeScript and fully editable.",
           icon: "BarChart",
         },
         {
-          title: "Launch & Share",
+          title: "Evolve Gracefully",
           description:
-            "Deploy to Vercel or any host in minutes. Share your validation page with potential users.",
+            "FounderOS keeps your specs and code in sync. Change an endpoint, and your SDKs, tests, and mocks update automatically — no rewrites needed.",
           icon: "Rocket",
         },
       ],

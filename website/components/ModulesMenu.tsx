@@ -59,6 +59,11 @@ const SERVICE_MODULES: AvailableModule[] = [
     description: "In-memory data store for caching and session management",
   },
   {
+    id: "bullmq",
+    name: "BullMQ",
+    description: "Queue and job processing for background tasks",
+  },
+  {
     id: "auth",
     name: "Authentication",
     description: "Add authentication to your API endpoints",

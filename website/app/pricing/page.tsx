@@ -15,8 +15,8 @@ export default function PricingPage() {
             Simple, Transparent Pricing
           </h1>
           <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-            Choose the plan that's right for you. All plans include a 14-day
-            free trial.
+            Choose the plan that's right for you. When we release publicly, all
+            plans will include a 14-day free trial.
           </p>
         </div>
 
@@ -52,8 +52,9 @@ export default function PricingPage() {
                 Is there a free trial?
               </h3>
               <p className="text-zinc-400">
-                Yes! All plans come with a 14-day free trial. No credit card
-                required to start.
+                Yes! All plans post-launch will come with a 14-day free trial.
+                Right now, you can get access to the Pro and Starter plan for
+                life for the price of a single monthly payment.
               </p>
             </div>
             <div>
@@ -70,13 +71,13 @@ export default function PricingPage() {
 
         {/* Enterprise CTA */}
         <div className="mt-20 bg-gradient-to-r from-red-600 to-orange-600 rounded-2xl p-12 text-center text-white border border-orange-500">
-          <h2 className="text-3xl font-bold mb-4">Need a custom plan?</h2>
+          <h2 className="text-3xl font-bold mb-4">Want to work with us?</h2>
           <p className="text-xl text-orange-100 mb-6 max-w-2xl mx-auto">
-            Contact our sales team for enterprise pricing and custom features
-            tailored to your needs.
+            We are currently offering a limited number of enterprise plans to
+            selected teams. If you are interested, please contact us.
           </p>
           <button className="bg-white text-orange-600 px-8 py-3 rounded-lg font-semibold hover:bg-zinc-100 transition-colors">
-            Contact Sales
+            Contact Us
           </button>
         </div>
       </div>

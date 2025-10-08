@@ -28,7 +28,7 @@ export default function ConnectionRenderer({
   return (
     <svg
       className="absolute inset-0 w-full h-full pointer-events-none"
-      style={{ zIndex: 1 }}
+      style={{ zIndex: 1, overflow: "visible" }}
     >
       {/* Existing Connections */}
       {connections.map((connection) => {
@@ -51,6 +51,9 @@ export default function ConnectionRenderer({
           x: (fromPoint.x + toPoint.x) / 2,
           y: (fromPoint.y + toPoint.y) / 2,
         };
+
+        // Animate default connection
+        const isDefaultConnection = connection.id === "connection-1";
 
         return (
           <g key={connection.id}>
@@ -77,7 +80,11 @@ export default function ConnectionRenderer({
               stroke="#52525b"
               strokeWidth="3"
               markerEnd="url(#arrowhead)"
-              style={{ pointerEvents: "none" }}
+              className={isDefaultConnection ? "animate-draw-line" : ""}
+              style={{
+                pointerEvents: "none",
+                animationDelay: isDefaultConnection ? "800ms" : "0ms",
+              }}
             />
           </g>
         );
@@ -119,20 +126,20 @@ export default function ConnectionRenderer({
           markerWidth="12"
           markerHeight="12"
           refX="10"
-          refY="4"
+          refY="6"
           orient="auto"
         >
-          <polygon points="0 0, 12 4, 0 8" fill="#52525b" />
+          <polygon points="0 0, 12 6, 0 12" fill="#52525b" />
         </marker>
         <marker
           id="arrowhead-drag"
           markerWidth="12"
           markerHeight="12"
           refX="10"
-          refY="4"
+          refY="6"
           orient="auto"
         >
-          <polygon points="0 0, 12 4, 0 8" fill="rgba(59, 130, 246, 0.8)" />
+          <polygon points="0 0, 12 6, 0 12" fill="rgba(59, 130, 246, 0.8)" />
         </marker>
       </defs>
     </svg>

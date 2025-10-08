@@ -1,6 +1,6 @@
 "use client";
 
-import { GripVertical } from "lucide-react";
+import { GripVertical, Database, Monitor, Smartphone } from "lucide-react";
 import type { Component, Tool } from "./types";
 
 interface ComponentNodeProps {
@@ -28,12 +28,23 @@ export default function ComponentNode({
   onDragIconMouseDown,
   onDragIconMouseUp,
 }: ComponentNodeProps) {
+  // Animate default components on initial load
+  const isDefaultComponent =
+    component.id.includes("backend-1") || component.id.includes("frontend-1");
+  const animationDelay = component.id.includes("backend-1")
+    ? "delay-400"
+    : component.id.includes("frontend-1")
+    ? "delay-500"
+    : "";
+
   return (
     <div
       onClick={onClick}
-      onMouseDown={onMouseDown}
-      onMouseUp={onMouseUp}
-      className={`absolute border-2 rounded-lg px-4 py-3 transition-all bg-zinc-800 cursor-pointer ${
+      onMouseDown={tool === "select" ? onDragIconMouseDown : onMouseDown}
+      onMouseUp={tool === "select" ? onDragIconMouseUp : onMouseUp}
+      className={`absolute border-2 rounded-lg px-4 py-3 transition-all bg-zinc-800 ${
+        tool === "connection" ? "select-none" : ""
+      } ${
         isSelected
           ? "border-orange-500 shadow-lg shadow-orange-500/30"
           : isConnectionSource
@@ -41,7 +52,9 @@ export default function ComponentNode({
           : isDragging
           ? "border-yellow-500 shadow-lg shadow-yellow-500/30"
           : "border-zinc-700"
-      } hover:bg-zinc-700`}
+      } hover:bg-zinc-700 ${
+        tool === "select" ? "cursor-move" : "cursor-pointer"
+      } ${isDefaultComponent ? `animate-pop-in ${animationDelay}` : ""}`}
       style={{
         left: component.x,
         top: component.y,
@@ -52,18 +65,6 @@ export default function ComponentNode({
     >
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2">
-          {/* Drag handle - only in select mode */}
-          {tool === "select" && (
-            <div
-              onMouseDown={onDragIconMouseDown}
-              onMouseUp={onDragIconMouseUp}
-            >
-              <GripVertical
-                size={20}
-                className="text-zinc-500 flex-shrink-0 cursor-pointer"
-              />
-            </div>
-          )}
           <div className="flex-1">
             <div className="text-zinc-100 font-medium text-sm truncate">
               {component.label}
@@ -71,7 +72,7 @@ export default function ComponentNode({
             {/* Type, Language, Framework info */}
             <div className="flex items-center gap-1 mt-0.5 flex-wrap">
               <span
-                className={`text-[10px] px-1.5 py-0.5 rounded ${
+                className={`inline-flex items-center gap-0.5 text-[10px] px-1.5 py-0.5 rounded ${
                   component.type === "web"
                     ? "bg-purple-600/50 text-purple-200"
                     : component.type === "mobile"
@@ -81,6 +82,10 @@ export default function ComponentNode({
                     : "bg-blue-600/50 text-blue-200"
                 }`}
               >
+                {component.type === "web" && <Monitor size={10} />}
+                {component.type === "mobile" && <Smartphone size={10} />}
+                {component.type === "database" && <Database size={10} />}
+                {component.type === "service" && <Database size={10} />}
                 {component.type === "web"
                   ? "Web"
                   : component.type === "mobile"

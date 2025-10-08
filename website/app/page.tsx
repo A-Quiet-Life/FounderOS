@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
-import Terminal from "@/components/Terminal";
+import AnimatedDemo from "@/components/AnimatedDemo";
 import PricingCards from "@/components/PricingCards";
 import BenefitCard from "@/components/BenefitCard";
 import HowItWorksCard from "@/components/HowItWorksCard";
@@ -64,7 +64,7 @@ export default function LandingPage() {
       <Navbar />
 
       {/* Hero Section - Split Layout */}
-      <section className="py-12 lg:py-16 bg-gradient-to-br from-zinc-800 via-zinc-950 to-black relative overflow-hidden">
+      <section className="py-20 lg:py-24 bg-gradient-to-br from-zinc-800 via-zinc-950 to-black relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-red-900/20 via-transparent to-transparent"></div>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-orange-900/20 via-transparent to-transparent"></div>
@@ -79,16 +79,15 @@ export default function LandingPage() {
               </div>
 
               <h1 className="text-5xl sm:text-4xl lg:text-6xl font-bold text-zinc-100 leading-tight tracking-tight break-words">
-                {">"}create
-                {"-"}
+                The
                 <span
-                  className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent"
+                  className="text-6xl sm:text-5xl md:text-7xl bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent"
                   style={{ fontFamily: siteConfig.fonts.cursive }}
                 >
-                  any
+                  {" "}
+                  visual{" "}
                 </span>
-                {"-"}
-                app
+                IDE for builders
               </h1>
 
               <p className="text-lg sm:text-xl text-zinc-400 leading-relaxed">
@@ -134,22 +133,42 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Right: Terminal */}
-            <Terminal />
+            {/* Right: Animated Demo */}
+            <AnimatedDemo />
           </div>
         </div>
       </section>
 
       {/* Benefits Section - Bento Grid */}
-      <section className="py-20 bg-gradient-to-b from-zinc-950 to-zinc-900">
+      <section className="py-28 bg-gradient-to-b from-zinc-950 to-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl font-bold text-zinc-100 mb-4">
               {siteConfig.landing.benefits.title}
             </h2>
-            <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
+            <p className="text-xl text-zinc-400 max-w-2xl mx-auto mb-6">
               {siteConfig.landing.benefits.subtitle}
             </p>
+            <Link
+              href="/demo"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold rounded-lg hover:from-red-600 hover:to-orange-600 transition-all shadow-lg hover:shadow-xl hover:scale-105"
+            >
+              Try Interactive Demo
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </Link>
           </div>
 
           {/* Bento Grid: 3 rows with different layouts */}
@@ -212,7 +231,7 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 bg-gradient-to-br from-zinc-900 via-zinc-950 to-zinc-900">
+      <section className="py-28 bg-gradient-to-br from-zinc-900 via-zinc-950 to-zinc-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl font-bold text-zinc-100 mb-4">
@@ -223,31 +242,80 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 animate-scale-in delay-200">
-            <HowItWorksCard
-              step={1}
-              title={siteConfig.landing.howItWorks.steps[0].title}
-              description={siteConfig.landing.howItWorks.steps[0].description}
-              icon={getIcon(siteConfig.landing.howItWorks.steps[0].icon, 40)}
-            />
-            <HowItWorksCard
-              step={2}
-              title={siteConfig.landing.howItWorks.steps[1].title}
-              description={siteConfig.landing.howItWorks.steps[1].description}
-              icon={getIcon(siteConfig.landing.howItWorks.steps[1].icon, 40)}
-            />
-            <HowItWorksCard
-              step={3}
-              title={siteConfig.landing.howItWorks.steps[2].title}
-              description={siteConfig.landing.howItWorks.steps[2].description}
-              icon={getIcon(siteConfig.landing.howItWorks.steps[2].icon, 40)}
-            />
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left: Animated Demo */}
+            <div className="animate-slide-in-left">
+              <AnimatedDemo type="api-config" />
+            </div>
+
+            {/* Right: Steps */}
+            <div className="space-y-6 animate-slide-in-right">
+              {/* Step 1 */}
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center text-white font-bold text-lg">
+                    1
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    {getIcon(siteConfig.landing.howItWorks.steps[0].icon, 28)}
+                    <h3 className="text-xl font-semibold text-zinc-100">
+                      {siteConfig.landing.howItWorks.steps[0].title}
+                    </h3>
+                  </div>
+                  <p className="text-zinc-400 leading-relaxed">
+                    {siteConfig.landing.howItWorks.steps[0].description}
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center text-white font-bold text-lg">
+                    2
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    {getIcon(siteConfig.landing.howItWorks.steps[1].icon, 28)}
+                    <h3 className="text-xl font-semibold text-zinc-100">
+                      {siteConfig.landing.howItWorks.steps[1].title}
+                    </h3>
+                  </div>
+                  <p className="text-zinc-400 leading-relaxed">
+                    {siteConfig.landing.howItWorks.steps[1].description}
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="flex gap-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-orange-500 flex items-center justify-center text-white font-bold text-lg">
+                    3
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    {getIcon(siteConfig.landing.howItWorks.steps[2].icon, 28)}
+                    <h3 className="text-xl font-semibold text-zinc-100">
+                      {siteConfig.landing.howItWorks.steps[2].title}
+                    </h3>
+                  </div>
+                  <p className="text-zinc-400 leading-relaxed">
+                    {siteConfig.landing.howItWorks.steps[2].description}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-zinc-950">
+      <section id="pricing" className="py-28 bg-zinc-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl font-bold text-zinc-100 mb-4">
@@ -274,7 +342,7 @@ export default function LandingPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 bg-gradient-to-b from-zinc-900 to-zinc-950">
+      <section className="py-28 bg-gradient-to-b from-zinc-900 to-zinc-950">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
             <h2 className="text-3xl sm:text-4xl font-bold text-zinc-100 mb-4">

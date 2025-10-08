@@ -27,7 +27,6 @@ export default function GitHubLink({
       className={`${classes} ${className}`}
     >
       <Github size={18} />
-      <span className="text-sm">GitHub</span>
     </Link>
   );
 }
