@@ -173,8 +173,59 @@ export default function DemoPage() {
     >
       <Navbar />
 
-      {/* Main canvas area - takes up remaining height */}
-      <div className="flex-1 relative overflow-hidden">
+      {/* Mobile Message - Show on screens smaller than 1024px */}
+      <div className="lg:hidden flex-1 flex items-center justify-center p-6">
+        <div className="max-w-md text-center space-y-6 animate-fade-in-up">
+          <div className="w-20 h-20 mx-auto bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="40"
+              height="40"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-white"
+            >
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-zinc-100">
+            Desktop Required
+          </h2>
+          <p className="text-zinc-400 text-lg leading-relaxed">
+            The interactive demo works best on desktop devices. Please switch to
+            a larger screen to experience the demo in full.
+          </p>
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-800 text-zinc-100 font-semibold rounded-lg border-2 border-zinc-700 hover:border-orange-500 hover:bg-zinc-700 transition-all"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M19 12H5" />
+              <path d="M12 19l-7-7 7-7" />
+            </svg>
+            Back to Home
+          </a>
+        </div>
+      </div>
+
+      {/* Desktop Demo - Show on screens 1024px and larger */}
+      <div className="hidden lg:block flex-1 relative overflow-hidden">
         <ArchitectureCanvas
           tool={tool}
           components={components}
