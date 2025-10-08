@@ -134,7 +134,9 @@ export default function LandingPage() {
             </div>
 
             {/* Right: Animated Demo */}
-            <AnimatedDemo />
+            <div className="hidden lg:block">
+              <AnimatedDemo />
+            </div>
           </div>
         </div>
       </section>
@@ -244,7 +246,7 @@ export default function LandingPage() {
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Animated Demo */}
-            <div className="animate-slide-in-left">
+            <div className="animate-slide-in-left hidden lg:block">
               <AnimatedDemo type="api-config" />
             </div>
 
