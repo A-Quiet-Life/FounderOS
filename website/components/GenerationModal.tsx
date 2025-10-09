@@ -183,14 +183,19 @@ export default function GenerationModal({
                 Generated Configuration Files
               </h2>
               <p className="text-zinc-400 mb-6">
-                Below are some example configuration files generated for each
-                component in your architecture. At launch, FounderOS will, in
-                addition to these YAML files, also scaffold all the boilerplate
-                you need for API, Web, and Mobile clients.
+                These template files are what drive FounderOS. Edit them in the
+                FounderOS app or directly in your repo to define routes,
+                modules, and contracts — they control every file we scaffold.
               </p>
               <p className="text-zinc-400 mb-6">
-                Once your services are generated, you can use an agent or
-                implement the business logic yourself.
+                When you sync, FounderOS generates the boilerplate controllers,
+                typed SDKs, and UI shells while you keep ownership of the
+                business logic. Update specs in the FounderOS app to open a PR
+                automatically, or run {" "}
+                <code className="px-1 py-0.5 rounded bg-zinc-800 border border-zinc-700 text-sm">
+                  founder sync
+                </code>
+                {" "}in the CLI to stay aligned.
               </p>
 
               <div className="space-y-6">

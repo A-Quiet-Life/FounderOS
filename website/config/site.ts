@@ -46,7 +46,7 @@ export const siteConfig = {
       },
       {
         name: "Enterprise",
-        price: "$99",
+        price: "",
         priceId: "price_enterprise_monthly", // Replace with your Stripe Price ID
         description: "For startups and larger teams",
         features: [
@@ -131,32 +131,34 @@ export const siteConfig = {
     },
     howItWorks: {
       title: "How It Works",
-      subtitle: "Build full-stack TypeScript apps without the setup.",
+      subtitle:
+        "FounderOS creates editable templates that generate your boilerplate while you focus on the product.",
       steps: [
         {
-          title: "Plan Your Architecture",
+          title: "Model Your System",
           description:
-            "Visually map your apps services — APIs, databases, queues, and integrations. FounderOS turns your layout into clean TypeScript specs.",
+            "Design services, data stores, and integrations inside the FounderOS app. Every component becomes a modifiable template file that spells out what to scaffold.",
           icon: "Binoculars",
         },
         {
-          title: "Sync and Build",
+          title: "Generate the Boilerplate",
           description:
-            "Click Sync to scaffold routes, Zod schemas, typed SDKs with tRPC, and frontends — all TypeScript, all editable in your monorepo.",
+            "Sync to build controllers, typed SDKs, and UI shells. The templates drive code generation, and you own the business logic inside plain TypeScript files.",
           icon: "BarChart",
         },
         {
-          title: "Evolve Gracefully",
+          title: "Stay in Sync Everywhere",
           description:
-            "As your app grows, FounderOS keeps contracts, SDKs, and tests in sync automatically. Add new services or features without breaking your stack.",
+            "Add code or adjust templates from the CLI or the FounderOS app — both flows work. Those templates stay the source of truth for code generation, and running founder sync locally or syncing from the FounderOS app opens a PR to keep everything aligned.",
           icon: "Rocket",
         },
       ],
     },
 
     pricing: {
-      title: "Simple, Transparent Pricing",
-      subtitle: "Choose the plan that's right for you. Start building today.",
+      title: "We're launching soon — secure your spot today",
+      subtitle:
+        "FounderOS is in pre-launch and we're accepting pre-orders. Reserve your plan now to be among the first when we go live.",
       viewDetailsText: "View full pricing details →",
     },
     faq: {
