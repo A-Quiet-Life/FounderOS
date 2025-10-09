@@ -6,7 +6,7 @@ interface UseCanvasInteractionProps {
   tool: Tool;
   components: Component[];
   onComponentUpdate: (componentId: string, updates: Partial<Component>) => void;
-  canvasRef: React.RefObject<HTMLDivElement>;
+  canvasRef: React.RefObject<HTMLDivElement | null>;
   zoom: number;
   pan: { x: number; y: number };
 }
