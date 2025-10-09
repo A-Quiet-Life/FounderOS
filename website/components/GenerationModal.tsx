@@ -1,7 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Loader2, CheckCircle, Code, Database, Package } from "lucide-react";
+import {
+  X,
+  Loader2,
+  CheckCircle,
+  Code,
+  Database,
+  Package,
+  FileCode,
+} from "lucide-react";
 import type { Component, Connection } from "./ArchitectureCanvas";
 import WaitlistForm from "./WaitlistForm";
 
@@ -10,6 +18,95 @@ interface GenerationModalProps {
   onClose: () => void;
   components: Component[];
   connections: Connection[];
+}
+
+// Function to generate YAML content for a component
+function generateComponentYAML(
+  component: Component,
+  connections: Connection[]
+): string {
+  const lines: string[] = [];
+
+  lines.push(`# ${component.label} Configuration`);
+  lines.push("");
+  lines.push("component:");
+  lines.push(`  name: "${component.label}"`);
+  lines.push(`  id: ${component.id}`);
+  lines.push(`  type: ${component.type}`);
+
+  if (component.language) {
+    lines.push(`  language: ${component.language}`);
+  }
+
+  if (component.framework) {
+    lines.push(`  framework: ${component.framework}`);
+  }
+
+  // Add API endpoints if they exist
+  if (component.apiEndpoints && component.apiEndpoints.length > 0) {
+    lines.push("");
+    lines.push("  api_endpoints:");
+    component.apiEndpoints.forEach((endpoint) => {
+      lines.push(`    - name: "${endpoint.name}"`);
+      lines.push(`      status_code: ${endpoint.statusCode}`);
+      if (endpoint.jsonData) {
+        lines.push(`      response:`);
+        try {
+          const parsed = JSON.parse(endpoint.jsonData);
+          const yamlData = JSON.stringify(parsed, null, 2)
+            .split("\n")
+            .map((line) => `        ${line}`)
+            .join("\n");
+          lines.push(yamlData);
+        } catch {
+          lines.push(`        data: ${endpoint.jsonData}`);
+        }
+      }
+    });
+  }
+
+  // Add modules if they exist
+  if (component.modules && component.modules.length > 0) {
+    lines.push("");
+    lines.push("  modules:");
+    component.modules.forEach((module) => {
+      lines.push(`    - name: "${module.name}"`);
+      lines.push(`      description: "${module.description}"`);
+      lines.push(`      enabled: ${module.enabled}`);
+      if (module.authType) {
+        lines.push(`      auth_type: ${module.authType}`);
+      }
+    });
+  }
+
+  // Add connections
+  const outgoingConnections = connections.filter(
+    (c) => c.from === component.id
+  );
+  const incomingConnections = connections.filter((c) => c.to === component.id);
+
+  if (outgoingConnections.length > 0 || incomingConnections.length > 0) {
+    lines.push("");
+    lines.push("  connections:");
+
+    if (outgoingConnections.length > 0) {
+      lines.push("    outgoing:");
+      outgoingConnections.forEach((conn) => {
+        lines.push(`      - to: ${conn.to}`);
+        lines.push(`        use_sdk: ${conn.useSDK || false}`);
+      });
+    }
+
+    if (incomingConnections.length > 0) {
+      lines.push("    incoming:");
+      incomingConnections.forEach((conn) => {
+        lines.push(`      - from: ${conn.from}`);
+        lines.push(`        use_sdk: ${conn.useSDK || false}`);
+      });
+    }
+  }
+
+  return lines.join("\n");
 }
 
 export default function GenerationModal({
@@ -61,7 +158,7 @@ export default function GenerationModal({
             </p>
           </div>
         ) : (
-          // Results State
+          // Results State with YAML Files
           <div className="max-w-6xl mx-auto px-8 py-12">
             {/* Header */}
             <div className="text-center mb-12">
@@ -79,320 +176,127 @@ export default function GenerationModal({
               </p>
             </div>
 
-            {/* Services Report */}
-            {services.length > 0 && (
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold text-zinc-100 mb-4 flex items-center gap-2">
-                  <Database className="w-6 h-6 text-blue-500" />
-                  Services Generated
-                </h2>
-                <div className="space-y-4">
-                  {services.map((service) => (
+            {/* Generated Files Section */}
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-zinc-100 mb-4 flex items-center gap-2">
+                <FileCode className="w-6 h-6 text-orange-500" />
+                Generated Configuration Files
+              </h2>
+              <p className="text-zinc-400 mb-6">
+                Below are some example configuration files generated for each
+                component in your architecture. At launch, FounderOS will, in
+                addition to these YAML files, also scaffold all the boilerplate
+                you need for API, Web, and Mobile clients.
+              </p>
+              <p className="text-zinc-400 mb-6">
+                Once your services are generated, you can use an agent or
+                implement the business logic yourself.
+              </p>
+
+              <div className="space-y-6">
+                {components.map((component) => {
+                  const yamlContent = generateComponentYAML(
+                    component,
+                    connections
+                  );
+                  const fileName = `${component.label
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}.yaml`;
+
+                  return (
                     <div
-                      key={service.id}
-                      className="bg-zinc-900 border border-zinc-800 rounded-xl p-6"
+                      key={component.id}
+                      className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden"
                     >
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="text-xl font-semibold text-zinc-100 mb-1">
-                            {service.label}
-                          </h3>
-                          <div className="flex items-center gap-2 text-sm text-zinc-400">
-                            <span className="px-2 py-1 bg-blue-600/20 text-blue-400 rounded">
-                              {service.language}
+                      {/* File Header */}
+                      <div className="flex items-center justify-between px-6 py-4 bg-zinc-800/50 border-b border-zinc-700">
+                        <div className="flex items-center gap-3">
+                          <FileCode className="w-5 h-5 text-orange-500" />
+                          <span className="font-mono text-sm text-zinc-300">
+                            {fileName}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {component.type === "service" && (
+                            <span className="px-2 py-1 bg-blue-600/20 text-blue-400 text-xs rounded">
+                              Service
                             </span>
-                            {service.framework && (
-                              <span className="px-2 py-1 bg-purple-600/20 text-purple-400 rounded">
-                                {service.framework}
-                              </span>
-                            )}
-                          </div>
+                          )}
+                          {component.type === "web" && (
+                            <span className="px-2 py-1 bg-purple-600/20 text-purple-400 text-xs rounded">
+                              Web
+                            </span>
+                          )}
+                          {component.type === "mobile" && (
+                            <span className="px-2 py-1 bg-pink-600/20 text-pink-400 text-xs rounded">
+                              Mobile
+                            </span>
+                          )}
+                          {component.type === "database" && (
+                            <span className="px-2 py-1 bg-green-600/20 text-green-400 text-xs rounded">
+                              Database
+                            </span>
+                          )}
                         </div>
-                        <Code className="w-6 h-6 text-orange-500" />
                       </div>
 
-                      <div className="space-y-3">
-                        {/* Generated Files */}
-                        <div>
-                          <p className="text-sm font-medium text-zinc-300 mb-1">
-                            Generated Files:
-                          </p>
-                          <ul className="text-sm text-zinc-400 space-y-1">
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              Server configuration & middleware
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              Database models & migrations
-                            </li>
-                            {service.apiEndpoints &&
-                              service.apiEndpoints.length > 0 && (
-                                <li className="flex items-center gap-2">
-                                  <CheckCircle className="w-4 h-4 text-green-500" />
-                                  {service.apiEndpoints.length} API endpoint
-                                  {service.apiEndpoints.length !== 1
-                                    ? "s"
-                                    : ""}{" "}
-                                  with types
-                                </li>
-                              )}
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              Environment variables template
-                            </li>
-                          </ul>
-                        </div>
-
-                        {/* Modules */}
-                        {service.modules && service.modules.length > 0 && (
-                          <div>
-                            <p className="text-sm font-medium text-zinc-300 mb-1 flex items-center gap-2">
-                              <Package className="w-4 h-4" />
-                              Integrated Modules:
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                              {service.modules.map((module) => (
-                                <span
-                                  key={module.id}
-                                  className="px-2 py-1 bg-green-600/20 text-green-400 text-xs rounded"
-                                >
-                                  {module.name}
-                                  {module.authType &&
-                                    ` (${
-                                      module.authType === "api_key"
-                                        ? "API Key"
-                                        : "OAuth"
-                                    })`}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                      {/* YAML Content in Markdown Style */}
+                      <div className="p-6">
+                        <pre className="font-mono text-sm text-zinc-300 overflow-x-auto bg-zinc-950 rounded-lg p-4 border border-zinc-800">
+                          <code className="language-yaml">{yamlContent}</code>
+                        </pre>
                       </div>
                     </div>
-                  ))}
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Summary Section */}
+            <div className="mb-12 bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <h3 className="text-xl font-bold text-zinc-100 mb-4 flex items-center gap-2">
+                <Package className="w-5 h-5 text-green-500" />
+                Architecture Summary
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="text-center p-4 bg-zinc-800 rounded-lg">
+                  <div className="text-3xl font-bold text-blue-400">
+                    {services.length}
+                  </div>
+                  <div className="text-sm text-zinc-400 mt-1">Services</div>
+                </div>
+                <div className="text-center p-4 bg-zinc-800 rounded-lg">
+                  <div className="text-3xl font-bold text-purple-400">
+                    {webClients.length}
+                  </div>
+                  <div className="text-sm text-zinc-400 mt-1">Web Clients</div>
+                </div>
+                <div className="text-center p-4 bg-zinc-800 rounded-lg">
+                  <div className="text-3xl font-bold text-pink-400">
+                    {mobileClients.length}
+                  </div>
+                  <div className="text-sm text-zinc-400 mt-1">
+                    Mobile Clients
+                  </div>
+                </div>
+                <div className="text-center p-4 bg-zinc-800 rounded-lg">
+                  <div className="text-3xl font-bold text-green-400">
+                    {databases.length}
+                  </div>
+                  <div className="text-sm text-zinc-400 mt-1">Databases</div>
                 </div>
               </div>
-            )}
-
-            {/* Web Clients Report */}
-            {webClients.length > 0 && (
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-zinc-100 mb-4 flex items-center gap-2">
-                  <Code className="w-6 h-6 text-purple-500" />
-                  Web Clients Generated
-                </h2>
-                <div className="space-y-4">
-                  {webClients.map((client) => (
-                    <div
-                      key={client.id}
-                      className="bg-zinc-900 border border-zinc-800 rounded-xl p-6"
-                    >
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="text-xl font-semibold text-zinc-100 mb-1">
-                            {client.label}
-                          </h3>
-                          <div className="flex items-center gap-2 text-sm text-zinc-400">
-                            {client.framework && (
-                              <span className="px-2 py-1 bg-purple-600/20 text-purple-400 rounded">
-                                {client.framework}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <Code className="w-6 h-6 text-orange-500" />
-                      </div>
-
-                      <div className="space-y-3">
-                        <div>
-                          <p className="text-sm font-medium text-zinc-300 mb-1">
-                            Generated Files:
-                          </p>
-                          <ul className="text-sm text-zinc-400 space-y-1">
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              Component library setup
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              Routing configuration
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              API client with type-safe hooks
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              State management setup
-                            </li>
-                          </ul>
-                        </div>
-
-                        {client.modules && client.modules.length > 0 && (
-                          <div>
-                            <p className="text-sm font-medium text-zinc-300 mb-1 flex items-center gap-2">
-                              <Package className="w-4 h-4" />
-                              Integrated Modules:
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                              {client.modules.map((module) => (
-                                <span
-                                  key={module.id}
-                                  className="px-2 py-1 bg-green-600/20 text-green-400 text-xs rounded"
-                                >
-                                  {module.name}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Mobile Clients Report */}
-            {mobileClients.length > 0 && (
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-zinc-100 mb-4 flex items-center gap-2">
-                  <Code className="w-6 h-6 text-pink-500" />
-                  Mobile Clients Generated
-                </h2>
-                <div className="space-y-4">
-                  {mobileClients.map((client) => (
-                    <div
-                      key={client.id}
-                      className="bg-zinc-900 border border-zinc-800 rounded-xl p-6"
-                    >
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="text-xl font-semibold text-zinc-100 mb-1">
-                            {client.label}
-                          </h3>
-                          <div className="flex items-center gap-2 text-sm text-zinc-400">
-                            {client.framework && (
-                              <span className="px-2 py-1 bg-pink-600/20 text-pink-400 rounded">
-                                {client.framework}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <Code className="w-6 h-6 text-orange-500" />
-                      </div>
-
-                      <div className="space-y-3">
-                        <div>
-                          <p className="text-sm font-medium text-zinc-300 mb-1">
-                            Generated Files:
-                          </p>
-                          <ul className="text-sm text-zinc-400 space-y-1">
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              Mobile UI components
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              Navigation setup
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              API client with type-safe hooks
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              State management setup
-                            </li>
-                          </ul>
-                        </div>
-
-                        {client.modules && client.modules.length > 0 && (
-                          <div>
-                            <p className="text-sm font-medium text-zinc-300 mb-1 flex items-center gap-2">
-                              <Package className="w-4 h-4" />
-                              Integrated Modules:
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                              {client.modules.map((module) => (
-                                <span
-                                  key={module.id}
-                                  className="px-2 py-1 bg-green-600/20 text-green-400 text-xs rounded"
-                                >
-                                  {module.name}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Databases Report */}
-            {databases.length > 0 && (
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-zinc-100 mb-4 flex items-center gap-2">
-                  <Database className="w-6 h-6 text-green-500" />
-                  Databases Configured
-                </h2>
-                <div className="space-y-4">
-                  {databases.map((database) => (
-                    <div
-                      key={database.id}
-                      className="bg-zinc-900 border border-zinc-800 rounded-xl p-6"
-                    >
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="text-xl font-semibold text-zinc-100 mb-1">
-                            {database.label}
-                          </h3>
-                        </div>
-                        <Database className="w-6 h-6 text-green-500" />
-                      </div>
-
-                      <div className="space-y-3">
-                        <div>
-                          <p className="text-sm font-medium text-zinc-300 mb-1">
-                            Generated Configuration:
-                          </p>
-                          <ul className="text-sm text-zinc-400 space-y-1">
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              Database schema and migrations
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              Connection pooling setup
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              Backup and recovery scripts
-                            </li>
-                            <li className="flex items-center gap-2">
-                              <CheckCircle className="w-4 h-4 text-green-500" />
-                              Environment configuration
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            </div>
 
             {/* Waitlist CTA */}
             <div className="mt-12 p-8 bg-gradient-to-r from-zinc-900 to-zinc-800 border border-zinc-700 rounded-xl text-center">
               <h2 className="text-2xl font-bold text-zinc-100 mb-2">
                 Wanna see what comes next?
               </h2>
-              <p className="text-zinc-400 mb-6">Join</p>
+              <p className="text-zinc-400 mb-6">
+                Join our waitlist to be the first to experience the full
+                platform
+              </p>
               <WaitlistForm />
             </div>
           </div>

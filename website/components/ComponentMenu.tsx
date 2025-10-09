@@ -70,8 +70,6 @@ export default function ComponentMenu({
       onUpdate(componentId, {
         label: label.trim(),
         type,
-        language: type === "service" ? language : undefined,
-        framework: framework || undefined,
       });
     }
     onClose();
@@ -90,8 +88,6 @@ export default function ComponentMenu({
       onUpdate(componentId, {
         label: label.trim(),
         type,
-        language: type === "service" ? language : undefined,
-        framework: framework || undefined,
       });
     }
     onClose();
@@ -113,6 +109,8 @@ export default function ComponentMenu({
       : SERVICE_FRAMEWORKS[language] || [];
 
   const handleMouseDown = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     setIsDragging(true);
     setDragOffset({
       x: e.clientX - position.x,
@@ -151,8 +149,14 @@ export default function ComponentMenu({
         left: position.x,
         top: position.y,
         width: "320px",
+        pointerEvents: "auto",
       }}
       onClick={(e) => e.stopPropagation()}
+      onMouseDown={(e) => {
+        // Stop propagation to prevent canvas pan, but don't prevent default
+        // so input fields can still receive focus
+        e.stopPropagation();
+      }}
     >
       <div
         className="flex items-center justify-between mb-3 p-4 pb-2 cursor-move"
@@ -181,8 +185,10 @@ export default function ComponentMenu({
                 type="text"
                 value={label}
                 onChange={(e) => setLabel(e.target.value)}
+                onMouseDown={(e) => e.stopPropagation()}
                 className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded text-zinc-100 text-sm focus:outline-none focus:border-orange-500"
                 placeholder="Component name"
+                autoFocus
               />
             </div>
 
@@ -213,11 +219,9 @@ export default function ComponentMenu({
                   type="button"
                   onClick={() => {
                     setType("web");
-                    setFramework(WEB_CLIENT_FRAMEWORKS[0]);
                     if (onUpdate && component) {
                       onUpdate(componentId, {
                         type: "web",
-                        framework: WEB_CLIENT_FRAMEWORKS[0],
                       });
                     }
                   }}
@@ -234,11 +238,9 @@ export default function ComponentMenu({
                   type="button"
                   onClick={() => {
                     setType("mobile");
-                    setFramework(MOBILE_CLIENT_FRAMEWORKS[0]);
                     if (onUpdate && component) {
                       onUpdate(componentId, {
                         type: "mobile",
-                        framework: MOBILE_CLIENT_FRAMEWORKS[0],
                       });
                     }
                   }}
@@ -255,11 +257,9 @@ export default function ComponentMenu({
                   type="button"
                   onClick={() => {
                     setType("database");
-                    setFramework(DATABASE_FRAMEWORKS[0]);
                     if (onUpdate && component) {
                       onUpdate(componentId, {
                         type: "database",
-                        framework: DATABASE_FRAMEWORKS[0],
                       });
                     }
                   }}
@@ -274,68 +274,6 @@ export default function ComponentMenu({
                 </button>
               </div>
             </div>
-
-            {/* Language Dropdown (Services only) */}
-            {type === "service" && (
-              <div>
-                <label className="block text-zinc-300 text-xs font-medium mb-1">
-                  Language
-                </label>
-                <select
-                  value={language}
-                  onChange={(e) => handleLanguageChange(e.target.value)}
-                  className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded text-zinc-100 text-sm focus:outline-none focus:border-orange-500"
-                >
-                  {Object.keys(SERVICE_FRAMEWORKS).map((lang) => (
-                    <option key={lang} value={lang}>
-                      {lang}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-
-            {/* Framework Dropdown */}
-            {type !== "database" && (
-              <div>
-                <label className="block text-zinc-300 text-xs font-medium mb-1">
-                  Framework
-                </label>
-                <select
-                  value={framework}
-                  onChange={(e) => setFramework(e.target.value)}
-                  className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded text-zinc-100 text-sm focus:outline-none focus:border-orange-500"
-                >
-                  <option value="">None</option>
-                  {availableFrameworks.map((fw) => (
-                    <option key={fw} value={fw}>
-                      {fw}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-
-            {/* Database Type Dropdown */}
-            {type === "database" && (
-              <div>
-                <label className="block text-zinc-300 text-xs font-medium mb-1">
-                  Database Type
-                </label>
-                <select
-                  value={framework}
-                  onChange={(e) => setFramework(e.target.value)}
-                  className="w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded text-zinc-100 text-sm focus:outline-none focus:border-orange-500"
-                >
-                  <option value="">Select database</option>
-                  {availableFrameworks.map((db) => (
-                    <option key={db} value={db}>
-                      {db}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
 
             {/* Action Buttons */}
             <div className="space-y-2 pt-2">

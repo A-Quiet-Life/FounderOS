@@ -6,12 +6,18 @@ interface UseCanvasInteractionProps {
   tool: Tool;
   components: Component[];
   onComponentUpdate: (componentId: string, updates: Partial<Component>) => void;
+  canvasRef: React.RefObject<HTMLDivElement>;
+  zoom: number;
+  pan: { x: number; y: number };
 }
 
 export function useCanvasInteraction({
   tool,
   components,
   onComponentUpdate,
+  canvasRef,
+  zoom,
+  pan,
 }: UseCanvasInteractionProps) {
   const [resizing, setResizing] = useState<{
     id: string;
@@ -66,6 +72,66 @@ export function useCanvasInteraction({
   // Mouse move handler for resizing, dragging, creating, and drag connection
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
+      // If no mouse button is pressed, clean up everything (safety check)
+      // Only if we're actually in an interaction state
+      if (e.buttons === 0 && (resizing || dragging || creatingComponent)) {
+        if (resizing) setResizing(null);
+        if (dragging) setDragging(null);
+        if (creatingComponent) setCreatingComponent(null);
+        return;
+      }
+
+      // Check if we should start dragging based on drag intent
+      if (dragIntent && dragIntent.enabled && !dragging && canvasRef.current) {
+        const deltaX = Math.abs(e.clientX - dragIntent.startX);
+        const deltaY = Math.abs(e.clientY - dragIntent.startY);
+        const threshold = 5; // pixels
+
+        if (deltaX > threshold || deltaY > threshold) {
+          // Start dragging
+          const component = components.find(
+            (c) => c.id === dragIntent.componentId
+          );
+          if (component) {
+            // Convert viewport coordinates to canvas coordinates
+            const rect = canvasRef.current.getBoundingClientRect();
+            const viewportX = dragIntent.startX - rect.left;
+            const viewportY = dragIntent.startY - rect.top;
+
+            // Account for pan and zoom to get canvas coordinates
+            const canvasX = (viewportX - pan.x) / zoom;
+            const canvasY = (viewportY - pan.y) / zoom;
+
+            const offsetX = canvasX - component.x;
+            const offsetY = canvasY - component.y;
+
+            setDragging({
+              id: dragIntent.componentId,
+              offsetX,
+              offsetY,
+            });
+            setDragIntent(null);
+
+            // Immediately update position for current mouse position to avoid lag
+            const currentViewportX = e.clientX - rect.left;
+            const currentViewportY = e.clientY - rect.top;
+            const currentCanvasX = (currentViewportX - pan.x) / zoom;
+            const currentCanvasY = (currentViewportY - pan.y) / zoom;
+
+            const newX = currentCanvasX - offsetX;
+            const newY = currentCanvasY - offsetY;
+
+            const snappedX = Math.round(newX / GRID_SIZE) * GRID_SIZE;
+            const snappedY = Math.round(newY / GRID_SIZE) * GRID_SIZE;
+
+            onComponentUpdate(dragIntent.componentId, {
+              x: snappedX,
+              y: snappedY,
+            });
+          }
+        }
+      }
+
       if (resizing) {
         const mouseX = e.clientX;
         const mouseY = e.clientY;
@@ -136,20 +202,34 @@ export function useCanvasInteraction({
         });
       }
 
-      if (creatingComponent) {
+      if (creatingComponent && canvasRef.current) {
+        const rect = canvasRef.current.getBoundingClientRect();
+        const viewportX = e.clientX - rect.left;
+        const viewportY = e.clientY - rect.top;
+
+        // Convert to canvas coordinates (accounting for pan and zoom)
+        const canvasX = (viewportX - pan.x) / zoom;
+        const canvasY = (viewportY - pan.y) / zoom;
+
         setCreatingComponent({
           ...creatingComponent,
-          currentX: e.clientX,
-          currentY: e.clientY,
+          currentX: canvasX,
+          currentY: canvasY,
         });
       }
 
-      if (dragging) {
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
+      if (dragging && canvasRef.current) {
+        // Convert viewport coordinates to canvas coordinates
+        const rect = canvasRef.current.getBoundingClientRect();
+        const viewportX = e.clientX - rect.left;
+        const viewportY = e.clientY - rect.top;
 
-        const newX = mouseX - dragging.offsetX;
-        const newY = mouseY - dragging.offsetY;
+        // Account for pan and zoom to get canvas coordinates
+        const canvasX = (viewportX - pan.x) / zoom;
+        const canvasY = (viewportY - pan.y) / zoom;
+
+        const newX = canvasX - dragging.offsetX;
+        const newY = canvasY - dragging.offsetY;
 
         const snappedX = Math.round(newX / GRID_SIZE) * GRID_SIZE;
         const snappedY = Math.round(newY / GRID_SIZE) * GRID_SIZE;
@@ -169,9 +249,11 @@ export function useCanvasInteraction({
     const handleMouseUp = () => {
       setResizing(null);
       setDragging(null);
+      setDragIntent(null);
 
       // Finalize component creation
       if (creatingComponent) {
+        // Coordinates are already in canvas space (converted on mousedown/mousemove)
         const x = Math.min(
           creatingComponent.startX,
           creatingComponent.currentX
@@ -207,8 +289,6 @@ export function useCanvasInteraction({
             height: snappedHeight,
             label: `Service ${components.length + 1}`,
             type: "service",
-            language: "TypeScript",
-            framework: "",
             modules: [],
           };
 
@@ -219,7 +299,13 @@ export function useCanvasInteraction({
       }
     };
 
-    if (resizing || dragging || dragConnection || creatingComponent) {
+    if (
+      resizing ||
+      dragging ||
+      dragConnection ||
+      creatingComponent ||
+      dragIntent
+    ) {
       window.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("mouseup", handleMouseUp);
       return () => {
@@ -232,8 +318,11 @@ export function useCanvasInteraction({
     dragging,
     dragConnection,
     creatingComponent,
+    dragIntent,
     components,
     onComponentUpdate,
+    zoom,
+    pan,
   ]);
 
   return {

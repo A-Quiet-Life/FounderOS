@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import AnimatedDemo from "@/components/AnimatedDemo";
 import PricingCards from "@/components/PricingCards";
 import BenefitCard from "@/components/BenefitCard";
-import HowItWorksCard from "@/components/HowItWorksCard";
 import { siteConfig } from "@/config/site";
 import {
   ChevronDown,
@@ -18,7 +18,6 @@ import {
   TrendingUp,
   Heart,
   Sparkles,
-  CheckCircle,
   Rocket,
   ClipboardList,
   Send,
@@ -138,6 +137,47 @@ export default function LandingPage() {
               <AnimatedDemo />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Powered By Section */}
+      <section className="py-12 bg-zinc-950 border-y border-zinc-800 hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-sm text-zinc-100 mb-8 uppercase tracking-wider font-medium">
+            Powered By
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 lg:gap-16 opacity-60">
+            {/* Next.js */}
+            <div className="flex items-center space-x-2">
+              <Image src="/next.svg" alt="Next.js" width={96} height={96} />
+            </div>
+
+            {/* TypeScript */}
+            <div className="flex items-center space-x-2">
+              <Image src="/ts.svg" alt="TypeScript" width={48} height={48} />
+            </div>
+
+            {/* React */}
+            <div className="flex items-center space-x-2">
+              <Image src="/react.svg" alt="React" width={48} height={48} />
+            </div>
+
+            {/* Node.js */}
+            <div className="flex items-center space-x-2">
+              <Image src="/node.svg" alt="Node.js" width={96} height={96} />
+            </div>
+
+            {/* Prisma */}
+            <div className="flex items-center space-x-2">
+              <Image src="/prisma.svg" alt="Prisma" width={96} height={96} />
+            </div>
+
+            {/* Redis */}
+            <div className="flex items-center space-x-2">
+              <Image src="/redis.svg" alt="Redis" width={64} height={64} />
+            </div>
+          </div>
+          <p className="text-center text-xs text-zinc-200 mt-6">and more...</p>
         </div>
       </section>
 

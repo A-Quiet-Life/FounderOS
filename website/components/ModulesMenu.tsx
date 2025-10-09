@@ -140,6 +140,8 @@ export default function ModulesMenu({
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     setIsDragging(true);
     setDragOffset({
       x: e.clientX - position.x,
@@ -181,6 +183,10 @@ export default function ModulesMenu({
         maxHeight: "500px",
       }}
       onClick={(e) => e.stopPropagation()}
+      onMouseDown={(e) => {
+        // Stop propagation to prevent canvas pan, but don't prevent default
+        e.stopPropagation();
+      }}
     >
       <div
         className="flex items-center justify-between mb-3 p-4 pb-2 cursor-move"

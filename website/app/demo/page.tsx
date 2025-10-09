@@ -18,8 +18,6 @@ export default function DemoPage() {
       height: 160,
       label: "API Service",
       type: "service",
-      language: "TypeScript",
-      framework: "Express",
       modules: [
         {
           id: "stripe",
@@ -37,7 +35,6 @@ export default function DemoPage() {
       height: 160,
       label: "Web App",
       type: "web",
-      framework: "React",
       modules: [
         {
           id: "clerk",
@@ -160,9 +157,6 @@ export default function DemoPage() {
   };
 
   const handleGenerate = () => {
-    console.log("Generating code from architecture...");
-    console.log("Components:", components);
-    console.log("Connections:", connections);
     setShowGenerationModal(true);
   };
 
@@ -258,7 +252,7 @@ export default function DemoPage() {
             disabled={components.length === 0}
             className="h-14 w-[148px] px-4 bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold text-base rounded-xl hover:from-red-600 hover:to-orange-600 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-red-500 disabled:hover:to-orange-500"
           >
-            Generate Code
+            Generate
           </button>
         </div>
 

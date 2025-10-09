@@ -25,7 +25,7 @@ export const siteConfig = {
         features: [
           "Access to the FounderOS CLI and Web Builder",
           "Secures services with basic authentication",
-          "Create projects with all languages and frameworks",
+          "Define API routes and endpoints",
           "Email support",
         ],
       },
@@ -38,7 +38,7 @@ export const siteConfig = {
           "Everything in Starter",
           "One click setup for payment, authentication, and analytics integration",
           "Create caches, queues, and event driven services",
-          "Generated versioned SDKs for type-safe service communication",
+          "Generated versioned SDKs for type-safe service communication using tRPC",
           "AI Integration for project fine tuning",
           "Priority support",
         ],
@@ -63,96 +63,97 @@ export const siteConfig = {
   landing: {
     hero: {
       subtitle:
-        "Skip the setup and start building. Create app components visually, and export to production-ready code.",
+        "Build full-stack TypeScript apps in minutes. Design your system visually, then export a production-ready monorepo powered by your favorite technologies.",
       cta: "Join Waitlist",
       secondaryCta: "See Plans",
       badge: "Powered by Open Source",
       socialProof: {
-        productsValidated: "300+",
-        productsValidatedLabel: "Tech stack combinations",
-        successRate: "95%",
-        successRateLabel: "Improved time to first deploy",
+        productsValidated: "10x",
+        productsValidatedLabel: "Faster to first deploy",
+        successRate: "500+",
+        successRateLabel: "Developers waitlisted",
       },
     },
     benefits: {
-      title: "Next Generation Bootstrapping",
+      title: "Next-Generation TypeScript Bootstrapping",
       subtitle:
-        "FounderOS allows you to configure the your apps core services, and then generates needed integrations, modules, and configuration.",
+        "FounderOS builds complete full-stack TypeScript monorepos using tools like tRPC, Prisma, Bun, and Next.js — so you can skip setup and start shipping.",
       items: [
         {
           title: "Lightning Fast",
           description:
-            "Spin up a complete, type-safe stack in seconds. No config, no setup — just design and export.",
+            "Spin up a full-stack TypeScript app in seconds. tRPC, Prisma, and Next.js all configured automatically.",
           icon: "Zap",
         },
         {
           title: "Payment Ready",
           description:
-            "Built-in Stripe modules with recurring billing and webhook handling already wired up.",
+            "Drop-in Stripe modules with typed endpoints, recurring billing, and webhook validation ready to go.",
           icon: "PiggyBank",
         },
         {
           title: "AI Ready",
           description:
-            "Pre-typed APIs and clean data flows make adding LLMs or agents effortless.",
+            "Strongly typed APIs and clean data models make connecting LLMs or AI agents straightforward.",
           icon: "Brain",
         },
         {
           title: "Build Your Way",
           description:
-            "Pick from ready modules for analytics, auth, queues, and caches — all pre-configured.",
+            "Add analytics, auth, queues, or caches with prebuilt TypeScript modules that integrate seamlessly.",
           icon: "Wrench",
         },
         {
           title: "Mobile First",
           description:
-            "Generate responsive, accessible React or Next.js frontends instantly.",
+            "Generate responsive React and Next.js frontends with modern, accessible components.",
           icon: "Smartphone",
         },
         {
           title: "No Hidden Magic",
           description:
-            "Clean, typed, and editable TypeScript. Everything visible, nothing hidden.",
+            "All generated code is plain TypeScript — readable, typed, and easy to extend. No hidden layers.",
           icon: "Sparkles",
         },
         {
           title: "Prebuilt Authentication",
           description:
-            "Secure your stack instantly with Clerk or Auth.js integration out of the box.",
+            "Secure your stack instantly with Clerk or Auth.js. Typed guards and client hooks included by default.",
           icon: "Shield",
         },
         {
           title: "Built for Growth",
           description:
-            "Add new services or modules anytime. FounderOS keeps everything in sync.",
+            "Easily expand your monorepo with new tRPC services or background workers. FounderOS keeps everything in sync.",
           icon: "TrendingUp",
         },
       ],
     },
     howItWorks: {
       title: "How It Works",
-      subtitle: "Choose your stack, and start building.",
+      subtitle: "Build full-stack TypeScript apps without the setup.",
       steps: [
         {
           title: "Plan Your Architecture",
           description:
-            "Visually lay out your system — add APIs, databases, caches, workers, and integrations. FounderOS creates clean YAML specs for every module and connection.",
+            "Visually map your apps services — APIs, databases, queues, and integrations. FounderOS turns your layout into clean TypeScript specs.",
           icon: "Binoculars",
         },
         {
           title: "Sync and Build",
           description:
-            "Click Sync to generate Fastify routes, Zod schemas, typed SDKs, queues, and Next.js wiring — all in TypeScript and fully editable.",
+            "Click Sync to scaffold routes, Zod schemas, typed SDKs with tRPC, and frontends — all TypeScript, all editable in your monorepo.",
           icon: "BarChart",
         },
         {
           title: "Evolve Gracefully",
           description:
-            "FounderOS keeps your specs and code in sync. Change an endpoint, and your SDKs, tests, and mocks update automatically — no rewrites needed.",
+            "As your app grows, FounderOS keeps contracts, SDKs, and tests in sync automatically. Add new services or features without breaking your stack.",
           icon: "Rocket",
         },
       ],
     },
+
     pricing: {
       title: "Simple, Transparent Pricing",
       subtitle: "Choose the plan that's right for you. Start building today.",
@@ -163,25 +164,34 @@ export const siteConfig = {
       subtitle: "Everything you need to know",
       items: [
         {
-          question: "How does this work?",
+          question: "What is FounderOS?",
           answer:
-            "FounderOS is a CLI that allows you to bootstrap your project in seconds. It's a tool that helps you to build your project faster and easier.",
+            "FounderOS is a visual builder and CLI for creating full-stack TypeScript monorepos. It scaffolds APIs, frontends, databases, and integrations in seconds.",
         },
         {
-          question: "How does FounderOS work?",
+          question: "What stacks are supported?",
           answer:
-            "When you create a new project, you'll be guided through a series of prompts to select your stack and features. Once you've selected your stack and features, the CLI will generate a project for you by combining a number of templates and integrations.",
+            "FounderOS is built around modern TypeScript frameworks: Next.js, tRPC, Prisma, React, and Node.js. More options will be added as the platform grows.",
         },
         {
-          question: "Can I customize the project?",
+          question: "Can I use it with my existing codebase?",
           answer:
-            "Yes! The project is fully customizable. You can modify the code to your liking.",
+            "Yes. You can import your current repo, generate specs for existing APIs, and add new services or modules on top without rewriting anything.",
         },
         {
-          question:
-            "Can I create projects using the template in the FounderOS repository?",
+          question: "Can I customize the generated code?",
           answer:
-            "Yes! You can create projects using the template in the FounderOS repository. This is an entirely open source project.",
+            "Absolutely. All code is plain, editable TypeScript — you can modify, extend, or replace anything at any time.",
+        },
+        {
+          question: "Does FounderOS handle deployment?",
+          answer:
+            "Not yet. We are choosing to focus on code generation right now. You can deploy your project anywhere — be it a provider or or your own infrastructure.",
+        },
+        {
+          question: "Is it open source?",
+          answer:
+            "Yes. FounderOS will launch with open-source templates and a CLI. Paid plans may add hosted syncing and advanced modules later on.",
         },
       ],
     },

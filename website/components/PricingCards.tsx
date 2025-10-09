@@ -87,7 +87,6 @@ export default function PricingCards({
                   <span className="text-5xl font-bold text-zinc-100">
                     {plan.price}
                   </span>
-                  <span className="text-zinc-400 ml-2">/once</span>
                 </div>
               </div>
 

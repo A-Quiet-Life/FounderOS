@@ -262,9 +262,6 @@ export default function AnimatedDemo({ type = "overview" }: AnimatedDemoProps) {
                   <Database size={10} />
                   Service
                 </span>
-                <span className="text-xs text-zinc-400">TypeScript</span>
-                <span className="text-xs text-zinc-500">•</span>
-                <span className="text-xs text-zinc-400">Express</span>
               </div>
             </div>
           </div>
@@ -312,7 +309,6 @@ export default function AnimatedDemo({ type = "overview" }: AnimatedDemoProps) {
                   <Monitor size={10} />
                   Web
                 </span>
-                <span className="text-xs text-zinc-400">React</span>
               </div>
             </div>
           </div>
@@ -350,21 +346,13 @@ export default function AnimatedDemo({ type = "overview" }: AnimatedDemoProps) {
                 </button>
               </div>
             </div>
-            <div>
-              <label className="block text-zinc-400 text-xs mb-1">
-                Language
-              </label>
-              <select className="w-full px-2 py-1 bg-zinc-900 border border-zinc-700 rounded text-zinc-100 text-xs">
-                <option>TypeScript</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-zinc-400 text-xs mb-1">
-                Framework
-              </label>
-              <select className="w-full px-2 py-1 bg-zinc-900 border border-zinc-700 rounded text-zinc-100 text-xs">
-                <option>Express</option>
-              </select>
+            <div className="pt-1 space-y-1">
+              <button className="w-full px-2 py-1.5 bg-zinc-700 text-zinc-100 text-xs rounded hover:bg-zinc-600">
+                Configure API
+              </button>
+              <button className="w-full px-2 py-1.5 bg-zinc-700 text-zinc-100 text-xs rounded hover:bg-zinc-600">
+                Configure Modules
+              </button>
             </div>
           </div>
         </div>
@@ -393,13 +381,10 @@ export default function AnimatedDemo({ type = "overview" }: AnimatedDemoProps) {
                 </button>
               </div>
             </div>
-            <div>
-              <label className="block text-zinc-400 text-xs mb-1">
-                Framework
-              </label>
-              <select className="w-full px-2 py-1 bg-zinc-900 border border-zinc-700 rounded text-zinc-100 text-xs">
-                <option>React</option>
-              </select>
+            <div className="pt-1">
+              <button className="w-full px-2 py-1.5 bg-zinc-700 text-zinc-100 text-xs rounded hover:bg-zinc-600">
+                Configure Modules
+              </button>
             </div>
           </div>
         </div>

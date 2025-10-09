@@ -16,6 +16,9 @@ interface ComponentNodeProps {
   onDragIconMouseUp: (e: React.MouseEvent) => void;
 }
 
+// Track which components have been interacted with (never animate again)
+const interactedComponents = new Set<string>();
+
 export default function ComponentNode({
   component,
   tool,
@@ -37,14 +40,23 @@ export default function ComponentNode({
     ? "delay-500"
     : "";
 
+  // Mark as interacted when selected or dragged
+  if (isSelected || isDragging) {
+    interactedComponents.add(component.id);
+  }
+
+  // Only show animation if it's a default component that has never been interacted with
+  const showAnimation =
+    isDefaultComponent && !interactedComponents.has(component.id);
+
   return (
     <div
       onClick={onClick}
       onMouseDown={tool === "select" ? onDragIconMouseDown : onMouseDown}
       onMouseUp={tool === "select" ? onDragIconMouseUp : onMouseUp}
-      className={`absolute border-2 rounded-lg px-4 py-3 transition-all bg-zinc-800 ${
-        tool === "connection" ? "select-none" : ""
-      } ${
+      className={`absolute border-2 rounded-lg px-4 py-3 bg-zinc-800 ${
+        isDragging ? "" : "transition-all"
+      } ${tool === "connection" ? "select-none" : ""} ${
         isSelected
           ? "border-orange-500 shadow-lg shadow-orange-500/30"
           : isConnectionSource
@@ -54,7 +66,7 @@ export default function ComponentNode({
           : "border-zinc-700"
       } hover:bg-zinc-700 ${
         tool === "select" ? "cursor-move" : "cursor-pointer"
-      } ${isDefaultComponent ? `animate-pop-in ${animationDelay}` : ""}`}
+      } ${showAnimation ? `animate-pop-in ${animationDelay}` : ""}`}
       style={{
         left: component.x,
         top: component.y,
@@ -94,16 +106,6 @@ export default function ComponentNode({
                   ? "Database"
                   : "Service"}
               </span>
-              {component.type === "service" && component.language && (
-                <span className="text-[10px] text-zinc-400">
-                  {component.language}
-                </span>
-              )}
-              {component.framework && (
-                <span className="text-[10px] text-zinc-400">
-                  • {component.framework}
-                </span>
-              )}
             </div>
 
             {/* Modules and API info */}
