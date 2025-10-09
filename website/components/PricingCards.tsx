@@ -84,20 +84,26 @@ export default function PricingCards({
               {/* Price */}
               <div className="mb-6">
                 <div className="flex items-baseline">
-                  <span className="text-5xl font-bold text-zinc-100">
-                    {plan.price}
-                  </span>
+                  {plan.name === "Enterprise" ? (
+                    <span className="text-3xl font-semibold text-zinc-300">
+                      Coming Soon
+                    </span>
+                  ) : (
+                    <span className="text-5xl font-bold text-zinc-100">
+                      {plan.price}
+                    </span>
+                  )}
                 </div>
               </div>
 
               {/* CTA Button */}
               {plan.name === "Enterprise" ? (
-                <button
-                  disabled
-                  className="w-full py-3 rounded-lg font-semibold transition-all mb-6 flex items-center justify-center bg-zinc-800 text-zinc-500 cursor-not-allowed"
+                <Link
+                  href="mailto:timmsevan@gmail.com"
+                  className="w-full py-3 rounded-lg font-semibold transition-all mb-6 flex items-center justify-center bg-gradient-to-r from-red-500 to-orange-500 text-white hover:from-red-600 hover:to-orange-600"
                 >
-                  Coming Soon
-                </button>
+                  Inquire
+                </Link>
               ) : showCheckout ? (
                 <button
                   onClick={() => handleCheckout(plan.priceId)}

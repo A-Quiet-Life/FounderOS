@@ -12,11 +12,12 @@ export default function PricingPage() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl font-bold text-zinc-100 mb-4">
-            Simple, Transparent Pricing
+            We're launching soon — secure your spot today
           </h1>
           <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-            Choose the plan that's right for you. When we release publicly, all
-            plans will include a 14-day free trial.
+            FounderOS is in pre-launch and we're accepting a limited number of
+            pre-orders. Lock in early access now and be first in line when we go
+            live.
           </p>
         </div>
 
