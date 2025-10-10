@@ -1,211 +1,99 @@
-# FounderOS
-
-**The final CLI for builders. Bootstrap your next company in one command.**
-
-FounderOS is a complete ecosystem for rapidly validating and building startup ideas. It consists of two main components:
-
-1. **CLI Tool** - Interactive command-line tool for bootstrapping new projects with your preferred tech stack
-2. **Landing Website** - Dark-themed Next.js marketing site with Stripe payments and Clerk waitlist
-
-## 🎯 Quick Start
-
-### CLI Tool
-
-```bash
-# Navigate to CLI directory
-cd cli
-
-# Build the tool
-go build -o founder
-
-# Run it
-./founder
-
-# Create a project
-founder > found my-awesome-startup
-```
-
-### Website
-
-```bash
-# From project root
-npm install
-
-# Copy environment template
-cp website/env.template website/.env.local
-
-# Add your Clerk & Stripe keys to website/.env.local
-
-# Start dev server
-npm run dev
-```
-
-Visit [http://localhost:3000](http://localhost:3000)
-
-## 📁 Project Structure
-
-```
-FounderOS/
-├── cli/                  # Go-based CLI tool
-│   ├── main.go          # CLI application code
-│   ├── founder          # Compiled binary
-│   ├── SETUP.md         # Detailed CLI setup instructions
-│   └── QUICKSTART.md    # Quick usage guide
-│
-├── website/             # Next.js landing page
-│   ├── app/            # Next.js 15 App Router
-│   ├── components/     # React components (Terminal, Cards, etc.)
-│   ├── config/         # Site configuration
-│   ├── SETUP.md        # Detailed website setup instructions
-│   └── env.template    # Environment variables template
-│
-└── package.json        # Root package.json for website commands
-```
-
-## 🛠️ CLI Tool Features
-
-✨ **Interactive CLI** - Beautiful, colorful prompts guide you through project setup  
-⚡ **Multiple Tech Stacks** - Support for popular backend and frontend frameworks  
-🎨 **Beautiful UI** - Colorful output with progress bars and emoji icons  
-🔧 **Customizable** - Choose from multiple backend languages, frameworks, and features  
-📦 **Long-running Session** - Create multiple projects without restarting
-
-### Supported Stacks
-
-**Backend Languages:**
-
-- TypeScript (Node.js)
-- Python
-- Go
-- Rust
-
-**Backend Frameworks:**
-
-- **TypeScript**: Express.js, NestJS, Fastify, Koa
-- **Python**: FastAPI, Django, Flask, Tornado
-- **Go**: Gin, Echo, Fiber, Chi
-- **Rust**: Actix-web, Rocket, Axum, Warp
-
-**Frontend Technologies:**
-
-- React
-- Next.js
-- Vue
-- Nuxt
-- Angular
-- Svelte
-
-**Additional Features:**
-
-- Message Queues
-- Caching Layer
-- Logging System
-- Scheduled Jobs
-
-## 🌐 Website Features
-
-**Dark Theme Design:**
-
-- Sleek zinc color palette
-- Red-orange gradient accents
-- IBM Plex Mono font
-- Modern, polished interface
-
-**Components:**
-
-- Interactive terminal hero section
-- Responsive navigation
-- Pricing cards with Stripe integration
-- Clerk waitlist integration
-- FAQ section
-- Benefits showcase
-
-**Tech Stack:**
-
-- Next.js 15 (App Router)
-- TypeScript
-- Tailwind CSS 4
-- Clerk Authentication
-- Stripe Payments
-- Lucide Icons
-
-## 📚 Detailed Documentation
-
-- **CLI Setup**: See `cli/SETUP.md` for detailed installation and configuration
-- **CLI Quick Start**: See `cli/QUICKSTART.md` for quick usage examples
-- **Website Setup**: See `website/SETUP.md` for environment variables and deployment
-
-## 🚀 Development Commands
-
-All commands should be run from the project root:
-
-```bash
-# Website development
-npm run dev              # Start Next.js dev server
-npm run build            # Build for production
-npm run start            # Start production server
-npm run lint             # Run ESLint
-
-# CLI development
-cd cli
-go build -o founder      # Build CLI tool
-./founder                # Run CLI tool
-```
-
-## 🎨 Design Philosophy
-
-FounderOS embraces a **terminal-first aesthetic** with:
-
-- Deep blacks and zinc grays
-- Red-orange gradient accents
-- Monospace fonts (IBM Plex Mono)
-- Terminal-inspired UI elements
-- Clean, modern components
-
-The design reflects the developer-focused nature of the product while maintaining a professional, polished appearance.
-
-## 📋 Requirements
-
-**CLI:**
-
-- Go 1.21 or later
-
-**Website:**
-
-- Node.js 18+
-- npm or yarn
-- Clerk account (for authentication/waitlist)
-- Stripe account (for payments)
-
-## 🔐 Environment Variables
-
-The website requires several environment variables. Copy `website/env.template` to `website/.env.local` and configure:
-
-```env
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxxxx
-CLERK_SECRET_KEY=sk_test_xxxxx
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxx
-STRIPE_SECRET_KEY=sk_test_xxxxx
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
-See `website/SETUP.md` for detailed configuration instructions.
-
-## 🤝 Contributing
-
-This is a demo project showcasing modern web development and CLI tooling patterns. Feel free to use it as a template for your own projects!
-
-## 📝 License
-
-ISC License - Use freely for your projects.
-
-## 🎉 Credits
-
-Built for builders who want to validate fast and ship faster.
+<div align="center">
+<h1>FounderOS</h1>
+  <img src="website/readmelogo.png" alt="FounderOS" width="900">
+  <a href="https://founderos.xyz">founderos.xyz</a>
+  <p>
+    <a href="#quick-start">Quick Start</a> •
+    <a href="#features">Features</a> •
+    <a href="#architecture">Architecture</a> •
+    <a href="#tech-stack">Tech Stack</a> •
+    <a href="#contributing">Contributing</a>
+  </p>
+</div>
 
 ---
 
-**Need help?** Check the detailed setup guides:
+## Project Status
 
-- CLI: `cli/SETUP.md`
-- Website: `website/SETUP.md`
+**FounderOS is actively under development.** We're building in public and expect to release an alpha version if we receive enough interest.
+
+Star this repo and check back regularly for updates!
+
+## Overview
+
+FounderOS is a visual builder and CLI that generates complete, production-ready TypeScript monorepos. Skip the boilerplate and focus on your product.
+
+**What it does:**
+
+- Visual canvas for designing services, APIs, and data models
+- Generates typed tRPC endpoints, Prisma schemas, and Next.js frontends
+- Drop-in modules for payments (Stripe), auth (Clerk/Auth.js), queues, caching
+- Keeps your codebase in sync with templates you control
+- All generated code is plain, readable TypeScript
+
+**What it doesn't do:**
+
+- Lock you into proprietary patterns or hidden abstractions
+- Deploy your code (bring your own infrastructure)
+- Replace your IDE (works alongside VS Code, Cursor, etc.)
+
+### Try the Interactive Demo
+
+The demo includes a visual canvas where you can:
+
+- Drag and drop to create services and clients
+- Connect components with typed SDKs
+- Configure modules (auth, payments, analytics)
+- See how the architecture flows
+
+Visit [http://founderos.xyz/demo](http://founderos.xyz/demo)
+
+## Features
+
+### Visual Builder
+
+Design your system architecture on an interactive canvas. Add services, databases, and integrations with a few clicks.
+
+### TypeScript-First
+
+All generated code is modern TypeScript. Uses tRPC for end-to-end type safety, Prisma for databases, and Next.js for frontends.
+
+### Drop-in Modules
+
+Pre-built, typed integrations for:
+
+- **Payments**: Stripe with webhook handling
+- **Auth**: Clerk or Auth.js with typed guards
+- **Queues**: BullMQ for background jobs
+- **Caching**: Redis integration
+- **Analytics**: PostHog, Mixpanel
+
+### Monorepo Structure
+
+Generates a clean turborepo with:
+
+- Shared types and utilities
+- Service-specific packages
+- Versioned SDK generation
+- Unified tooling (ESLint, Prettier, TypeScript)
+
+### Template-Driven
+
+Your architecture lives as editable templates. Modify them to customize how code gets generated.
+
+### No Lock-In
+
+Generated code is yours. No proprietary runtime, no hidden magic. Eject anytime by just... not running the CLI again.
+
+## License
+
+[ISC License](LICENSE)
+
+## Links
+
+- **Website**: [founderos.xyz](https://founderos.xyz)
+- **Demo**: [founderos.xyz/demo](https://founderos.xyz/demo)
+
+<div align="center">
+  <p>A <a href="https://aquietlife.io">Quiet Life</a> product.</p>
+</div>
