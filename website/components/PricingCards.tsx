@@ -98,7 +98,7 @@ export default function PricingCards() {
               {plan.name === "Enterprise" ? (
                 <Link
                   href="mailto:timmsevan@gmail.com"
-                  className="w-full py-3 rounded-lg font-semibold transition-all mb-6 flex items-center justify-center bg-gradient-to-r from-red-500 to-orange-500 text-white hover:from-red-600 hover:to-orange-600"
+                  className="cursor-pointer w-full py-3 rounded-lg font-semibold transition-all mb-6 flex items-center justify-center text-white bg-zinc-800 text-white hover:bg-zinc-700"
                 >
                   Coming Soon
                 </Link>
@@ -108,8 +108,8 @@ export default function PricingCards() {
                   disabled={loading !== null}
                   className={`w-full py-3 rounded-lg font-semibold transition-all mb-6 flex items-center justify-center ${
                     plan.popular
-                      ? "bg-gradient-to-r from-red-500 to-orange-500 text-white hover:from-red-600 hover:to-orange-600"
-                      : "bg-zinc-800 text-white hover:bg-zinc-700"
+                      ? "cursor-pointer bg-gradient-to-r from-red-500 to-orange-500 text-white hover:from-red-600 hover:to-orange-600"
+                      : "cursor-pointer bg-zinc-800 text-white hover:bg-zinc-700"
                   } disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                   {loading === plan.priceId ? (
