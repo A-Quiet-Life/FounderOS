@@ -20,7 +20,7 @@ export const siteConfig = {
       {
         name: "Starter",
         price: "$19",
-        priceId: "price_starter_monthly", // Replace with your Stripe Price ID
+        priceId: "1", // Replace with your Stripe Price ID
         description: "Perfect for prototyping",
         features: [
           "Access to the FounderOS CLI and Web Builder",
@@ -32,7 +32,7 @@ export const siteConfig = {
       {
         name: "Pro",
         price: "$29",
-        priceId: "price_pro_monthly", // Replace with your Stripe Price ID
+        priceId: "2", // Replace with your Stripe Price ID
         description: "For building production ready systems",
         features: [
           "Everything in Starter",

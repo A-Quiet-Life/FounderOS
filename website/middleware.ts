@@ -17,6 +17,10 @@ const isPublicRoute = createRouteMatcher([
   "/",
   "/demo",
   "/pricing",
+  "/terms",
+  "/legal",
+  "/success",
+  "/api/create-checkout-session",
   "/sign-in(.*)",
   "/sign-up(.*)",
 ]);

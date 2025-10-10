@@ -56,21 +56,12 @@ export default function Navbar() {
               Pricing
             </Link>
             <Link
-              href="mailto:timmsevan@gmail.com"
+              href="mailto:evan@aquietlife.io"
               className="flex items-center gap-2 text-zinc-400 hover:text-zinc-100 transition-colors"
             >
               <Mail size={18} />
             </Link>
             <GitHubLink />
-            <Link
-              href="https://twitter.com/epemms"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-zinc-400 hover:text-zinc-100 transition-colors"
-              aria-label="X"
-            >
-              <XIcon size={18} />
-            </Link>
             <Link
               href="/#waitlist"
               className="bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-lg hover:from-red-600 hover:to-orange-600 transition-colors font-medium"
@@ -108,23 +99,14 @@ export default function Navbar() {
               Pricing
             </Link>
             <Link
-              href="mailto:timmsevan@gmail.com"
+              href="mailto:evan@aquietlife.io"
               className="flex items-center gap-2 px-3 py-2 rounded-md text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
               onClick={() => setIsOpen(false)}
             >
               <Mail size={18} />
             </Link>
             <GitHubLink className="px-3 py-2 rounded-md hover:bg-zinc-800" />
-            <Link
-              href="https://twitter.com/epemms"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 rounded-md text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800"
-              aria-label="X"
-              onClick={() => setIsOpen(false)}
-            >
-              <XIcon size={18} />
-            </Link>
+
             <Link
               href="/#waitlist"
               className="block px-3 py-2 rounded-md text-white bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600"

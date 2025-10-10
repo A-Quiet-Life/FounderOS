@@ -5,16 +5,14 @@ import Link from "next/link";
 import { Check, Loader2 } from "lucide-react";
 import { siteConfig } from "@/config/site";
 
-interface PricingCardsProps {
-  showCheckout?: boolean;
-}
-
-export default function PricingCards({
-  showCheckout = false,
-}: PricingCardsProps) {
+export default function PricingCards() {
   const [loading, setLoading] = useState<string | null>(null);
 
-  const handleCheckout = async (priceId: string) => {
+  const handleCheckout = async (priceId?: string) => {
+    if (!priceId) {
+      return;
+    }
+
     setLoading(priceId);
 
     try {
@@ -102,9 +100,9 @@ export default function PricingCards({
                   href="mailto:timmsevan@gmail.com"
                   className="w-full py-3 rounded-lg font-semibold transition-all mb-6 flex items-center justify-center bg-gradient-to-r from-red-500 to-orange-500 text-white hover:from-red-600 hover:to-orange-600"
                 >
-                  Inquire
+                  Coming Soon
                 </Link>
-              ) : showCheckout ? (
+              ) : (
                 <button
                   onClick={() => handleCheckout(plan.priceId)}
                   disabled={loading !== null}
@@ -123,17 +121,6 @@ export default function PricingCards({
                     "Get Started"
                   )}
                 </button>
-              ) : (
-                <Link
-                  href="/pricing"
-                  className={`w-full py-3 rounded-lg font-semibold transition-all mb-6 flex items-center justify-center ${
-                    plan.popular
-                      ? "bg-gradient-to-r from-red-500 to-orange-500 text-white hover:from-red-600 hover:to-orange-600"
-                      : "bg-zinc-800 text-white hover:bg-zinc-700"
-                  }`}
-                >
-                  Get Started
-                </Link>
               )}
 
               {/* Features List */}
@@ -148,6 +135,23 @@ export default function PricingCards({
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Legal Disclaimer */}
+      <div className="mt-8 p-4 bg-zinc-900/50 border border-zinc-800 rounded-lg">
+        <p className="text-center text-zinc-400 text-sm">
+          <strong className="text-zinc-300">Pre-Launch Notice:</strong>{" "}
+          {siteConfig.name} has not yet launched. All payments include a 30-day
+          money back guarantee and will be fully refunded if the product does
+          not launch.{" "}
+          <Link
+            href="/legal"
+            className="text-orange-500 hover:text-orange-400 underline"
+          >
+            View full legal disclaimer
+          </Link>
+          .
+        </p>
       </div>
     </div>
   );

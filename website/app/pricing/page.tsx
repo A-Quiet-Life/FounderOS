@@ -1,7 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import PricingCards from "@/components/PricingCards";
+import { siteConfig } from "@/config/site";
+import Footer from "@/components/Footer";
 
 export default function PricingPage() {
   return (
@@ -22,7 +25,7 @@ export default function PricingPage() {
         </div>
 
         {/* Pricing Cards with Checkout */}
-        <PricingCards showCheckout={true} />
+        <PricingCards />
 
         {/* FAQ Section */}
         <div className="mt-20 max-w-3xl mx-auto">
@@ -82,6 +85,9 @@ export default function PricingPage() {
           </button>
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

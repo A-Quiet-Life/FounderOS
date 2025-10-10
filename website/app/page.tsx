@@ -30,6 +30,7 @@ import {
   Cable,
 } from "lucide-react";
 import { Waitlist } from "@clerk/nextjs";
+import Footer from "@/components/Footer";
 
 // Icon mapping function
 const getIcon = (iconName: string, size: number = 32) => {
@@ -369,7 +370,7 @@ export default function LandingPage() {
           </div>
 
           <div className="animate-scale-in delay-200 flex justify-center">
-            <PricingCards showCheckout={false} />
+            <PricingCards />
           </div>
 
           <div className="text-center mt-12">
@@ -569,13 +570,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-black text-zinc-500 py-4 border-t border-zinc-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-left">
-            <p className="text-sm">© 2025 {siteConfig.name}.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
