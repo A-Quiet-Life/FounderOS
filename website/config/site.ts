@@ -19,7 +19,7 @@ export const siteConfig = {
     plans: [
       {
         name: "Starter",
-        price: "$19",
+        price: "$10",
         priceId: "1", // Replace with your Stripe Price ID
         description: "Perfect for prototyping",
         features: [
@@ -31,7 +31,7 @@ export const siteConfig = {
       },
       {
         name: "Pro",
-        price: "$29",
+        price: "$24",
         priceId: "2", // Replace with your Stripe Price ID
         description: "For building production ready systems",
         features: [
