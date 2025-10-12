@@ -94,22 +94,175 @@ export default function LandingPage() {
                 {siteConfig.landing.hero.subtitle}
               </p>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="#pricing"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold rounded-lg hover:from-red-600 hover:to-orange-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                >
-                  See Plans
-                  <Rocket className="ml-2" size={20} />
-                </Link>
-                <a
-                  href="#waitlist"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-zinc-800 text-zinc-100 font-semibold rounded-lg border-2 border-zinc-700 hover:border-orange-500 hover:bg-zinc-700 transition-all"
-                >
-                  Join Waitlist
-                  <Send className="ml-2" size={20} />
-                </a>
+              {/* Waitlist Form */}
+              <div className="max-w-2xl">
+                <Waitlist
+                  appearance={{
+                    elements: {
+                      rootBox: {
+                        width: "100%",
+                      },
+                      cardBox: {
+                        width: "100%",
+                        padding: "none",
+                      },
+                      card: {
+                        backgroundColor: "transparent",
+                        padding: "0",
+                        boxShadow: "none",
+                      },
+                      form: {
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "0.75rem",
+                        alignItems: "stretch",
+                      },
+                      formButtonPrimary: {
+                        background:
+                          "linear-gradient(to right, #dc2626, #ea580c)",
+                        fontSize: "1rem",
+                        fontWeight: "600",
+                        padding: "0 2.5rem",
+                        minHeight: "3.5rem",
+                        marginTop: "0",
+                        borderRadius: "0.5rem",
+                        boxShadow:
+                          "0 4px 6px -1px rgba(220, 38, 38, 0.4), 0 2px 4px -1px rgba(234, 88, 12, 0.3)",
+                        transition: "all 0.2s ease",
+                        flex: "0 0 auto",
+                        width: "auto",
+                        minWidth: "fit-content",
+                        whiteSpace: "nowrap",
+                        "&:hover": {
+                          background:
+                            "linear-gradient(to right, #b91c1c, #c2410c)",
+                          transform: "translateY(-1px)",
+                          boxShadow:
+                            "0 6px 10px -1px rgba(185, 28, 28, 0.5), 0 4px 6px -1px rgba(194, 65, 12, 0.4)",
+                        },
+                        "&:active": {
+                          transform: "translateY(0)",
+                        },
+                      },
+                      formFieldInput: {
+                        fontSize: "1rem",
+                        padding: "1rem 1.25rem",
+                        minHeight: "3.5rem",
+                        borderRadius: "0.5rem",
+                        border: "2px solid #52525b",
+                        backgroundColor: "#27272a",
+                        color: "#fafafa",
+                        transition: "all 0.2s ease",
+                        flex: "1 1 auto",
+                        minWidth: "0",
+                        "&::placeholder": {
+                          color: "#d4d4d8",
+                          opacity: 0.8,
+                        },
+                        "&:hover": {
+                          borderColor: "#71717a",
+                          backgroundColor: "#3f3f46",
+                        },
+                        "&:focus": {
+                          borderColor: "#f97316",
+                          backgroundColor: "#3f3f46",
+                          boxShadow: "0 0 0 3px rgba(249, 115, 22, 0.2)",
+                          outline: "none",
+                        },
+                      },
+                      formFieldLabel: {
+                        display: "none",
+                      },
+                      headerTitle: {
+                        display: "none",
+                      },
+                      headerSubtitle: {
+                        display: "none",
+                      },
+                      footer: {
+                        display: "none",
+                      },
+                      formFieldInputShowPasswordButton: {
+                        color: "#a1a1aa",
+                        "&:hover": {
+                          color: "#fafafa",
+                        },
+                      },
+                      identityPreviewText: {
+                        color: "#a1a1aa",
+                      },
+                      identityPreviewEditButton: {
+                        color: "#f97316",
+                        "&:hover": {
+                          color: "#ea580c",
+                        },
+                      },
+                      formFieldErrorText: {
+                        color: "#ef4444",
+                        marginTop: "0.5rem",
+                        fontSize: "0.875rem",
+                      },
+                      formFieldSuccessText: {
+                        color: "#22c55e",
+                        marginTop: "1rem",
+                        fontSize: "1.125rem",
+                        fontWeight: "600",
+                        padding: "1.25rem 1.5rem",
+                        backgroundColor: "rgba(34, 197, 94, 0.15)",
+                        borderRadius: "0.75rem",
+                        border: "2px solid rgba(34, 197, 94, 0.4)",
+                        display: "block",
+                      },
+                      verificationSuccess: {
+                        color: "#22c55e",
+                        fontSize: "1.125rem",
+                        fontWeight: "600",
+                        padding: "1.25rem 1.5rem",
+                        backgroundColor: "rgba(34, 197, 94, 0.15)",
+                        borderRadius: "0.75rem",
+                        border: "2px solid rgba(34, 197, 94, 0.4)",
+                      },
+                      __experimental_captchaSubmitButton: {
+                        display: "none",
+                      },
+                      otpCodeFieldInput: {
+                        borderColor: "#3f3f46",
+                        backgroundColor: "#09090b",
+                        color: "#fafafa",
+                        "&:hover": {
+                          borderColor: "#52525b",
+                        },
+                        "&:focus": {
+                          borderColor: "#f97316",
+                          backgroundColor: "#18181b",
+                        },
+                      },
+                    },
+                  }}
+                />
+
+                {/* View Plans Link */}
+                <div className="mt-4">
+                  <Link
+                    href="#pricing"
+                    className="inline-flex items-center gap-2 text-zinc-200 hover:text-orange-400 transition-colors text-base font-semibold"
+                  >
+                    View plans
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </Link>
+                </div>
               </div>
 
               {/* Social Proof */}

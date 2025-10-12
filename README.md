@@ -1,13 +1,19 @@
 <div align="center">
 <h1>FounderOS</h1>
   <img src="website/readmelogo.png" alt="FounderOS" width="900">
-  <a href="https://founderos.xyz">founderos.xyz</a>
+  
+  <p><strong>Build full-stack TypeScript monorepos in minutes.</strong></p>
+  
   <p>
-    <a href="#quick-start">Quick Start</a> •
-    <a href="#features">Features</a> •
-    <a href="#architecture">Architecture</a> •
-    <a href="#tech-stack">Tech Stack</a> •
-    <a href="#contributing">Contributing</a>
+    <a href="https://founderos.xyz/#waitlist">
+      <strong>→ Join the Waitlist</strong>
+    </a>
+  </p>
+  
+  <p>
+    <a href="https://founderos.xyz">Website</a> •
+    <a href="https://founderos.xyz/demo">Demo</a> •
+    <a href="#features">Features</a>
   </p>
 </div>
 
