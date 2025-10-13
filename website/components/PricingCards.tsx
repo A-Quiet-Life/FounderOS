@@ -97,7 +97,7 @@ export default function PricingCards() {
               {/* CTA Button */}
               {plan.name === "Enterprise" ? (
                 <Link
-                  href="mailto:timmsevan@gmail.com"
+                  href="mailto:evan@aquietlife.io"
                   className="cursor-pointer w-full py-3 rounded-lg font-semibold transition-all mb-6 flex items-center justify-center text-white bg-zinc-800 text-white hover:bg-zinc-700"
                 >
                   Coming Soon
